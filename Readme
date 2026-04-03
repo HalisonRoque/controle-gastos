@@ -1,0 +1,112 @@
+# 📊 Sistema de Controle de Gastos Residenciais
+
+## 🧱 Arquitetura
+
+O projeto foi desenvolvido utilizando **arquitetura em camadas com organização por feature (Feature Folder)**, visando alta coesão, baixo acoplamento e facilidade de manutenção.
+
+A estrutura do back-end foi organizada por domínio (ex: Person, Category, Transaction), onde cada feature contém seus próprios:
+
+* Controllers
+* Services
+* Repositories
+* DTOs
+* Entities
+
+Essa abordagem facilita a escalabilidade do sistema e evita a dispersão de responsabilidades entre múltiplas pastas globais.
+
+---
+
+## ⚙️ Tecnologias Utilizadas
+
+### Back-end
+
+* .NET (Web API)
+* C#
+* Entity Framework Core
+* SQLite (banco de dados embarcado)
+
+### Front-end
+
+* React
+* TypeScript
+* Vite
+
+---
+
+## 🗂️ Padrões e Boas Práticas
+
+### 🔹 Separação de responsabilidades (SRP)
+
+A aplicação segue o princípio de responsabilidade única, dividindo as camadas em:
+
+* **Controller**: responsável apenas por receber e responder requisições HTTP
+* **Service**: responsável pelas regras de negócio
+* **Repository**: responsável pelo acesso aos dados
+
+---
+
+### 🔹 Uso de DTOs (Data Transfer Objects)
+
+Foram utilizados DTOs para:
+
+* Entrada de dados (`Create` e `Update`)
+* Saída de dados (`Response`)
+
+Isso garante desacoplamento entre a camada de domínio e a camada de apresentação, além de maior controle sobre os dados expostos.
+
+---
+
+### 🔹 Padrão Repository
+
+A camada de repositório abstrai o acesso ao banco de dados utilizando o Entity Framework, permitindo:
+
+* Facilidade de manutenção
+* Testabilidade
+* Troca futura de tecnologia de persistência
+
+---
+
+### 🔹 Injeção de Dependência
+
+Foi utilizado o sistema nativo de **Dependency Injection do .NET**, registrando services e repositories no `Program.cs`.
+
+---
+
+### 🔹 Persistência de Dados
+
+Foi utilizado **SQLite**, um banco de dados leve e embarcado, garantindo:
+
+* Persistência local dos dados
+* Facilidade de execução do projeto sem necessidade de instalação de SGBDs externos
+
+---
+
+### 🔹 Organização por Feature (Feature Folder)
+
+O projeto adota o padrão Feature Folder, onde cada domínio possui sua própria estrutura interna:
+
+Exemplo:
+
+Features/
+└── Person/
+├── DTOs/
+├── Entities/
+├── Repositories/
+├── Services/
+└── PersonController.cs
+
+---
+
+## 🚀 Objetivo
+
+O sistema tem como objetivo permitir o controle de gastos residenciais, possibilitando:
+
+* Cadastro de pessoas
+* Organização por categorias
+* Registro de transações (receitas e despesas)
+
+---
+
+## 📌 Considerações
+
+O projeto foi estruturado com foco em boas práticas de desenvolvimento, legibilidade de código e facilidade de manutenção, atendendo aos critérios de avaliação propostos.
