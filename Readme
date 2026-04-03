@@ -88,7 +88,7 @@ O projeto adota o padrão Feature Folder, onde cada domínio possui sua própria
 Exemplo:
 
 Features/
-└── Person/
+└── Persons/
 ├── DTOs/
 ├── Entities/
 ├── Repositories/
