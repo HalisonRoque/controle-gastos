@@ -16,7 +16,7 @@ namespace webApi.Features.Persons
         }
 
         // GET: api/person
-        [HttpGet]
+        [HttpGet("all")]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _service.GetAllAsync());
@@ -30,7 +30,7 @@ namespace webApi.Features.Persons
         }
 
         // POST: api/person
-        [HttpPost]
+        [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreatePersonDto dto)
         {
             var result = await _service.CreateAsync(dto);
