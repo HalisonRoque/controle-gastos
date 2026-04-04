@@ -1,3 +1,4 @@
+using webApi.Features.Persons.Error;
 using webApi.Features.Persons.Repositories;
 using webApi.Features.Transactions.DTOs;
 using webApi.Features.Transactions.Entities;
@@ -41,14 +42,7 @@ namespace webApi.Features.Transactions.Services
             var person = await _personRepository.GetByIdAsync(dto.PersonId);
 
             if (person == null)
-                throw new Exception("Person not found");
-
-            // 🔥 REGRA DE NEGÓCIO
-            if (person.Age < 18 && dto.Type.ToLower() == "income")
-                throw new Exception("Minors can only have expenses");
-
-            if (dto.Value <= 0)
-                throw new Exception("Value must be greater than zero");
+                throw new PersonNotFoundException();
 
             var transaction = new Transaction
             {

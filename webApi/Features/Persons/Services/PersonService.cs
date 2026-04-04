@@ -1,5 +1,6 @@
 using webApi.Features.Persons.DTOs;
 using webApi.Features.Persons.Entities;
+using webApi.Features.Persons.Error;
 using webApi.Features.Persons.Repositories;
 using webApi.Features.Persons.Services;
 
@@ -33,7 +34,7 @@ namespace webApi.Features.Persons.Services
             var person = await _repository.GetByIdAsync(id);
 
             if (person == null)
-                throw new Exception("Person not found");
+                throw new PersonNotFoundException();
 
             return new ResponsePersonDto
             {
@@ -66,7 +67,7 @@ namespace webApi.Features.Persons.Services
             var person = await _repository.GetByIdAsync(id);
 
             if (person == null)
-                throw new Exception("Person not found");
+                throw new PersonNotFoundException();
 
             person.Name = dto.Name;
             person.Age = dto.Age;
@@ -79,7 +80,7 @@ namespace webApi.Features.Persons.Services
             var person = await _repository.GetByIdAsync(id);
 
             if (person == null)
-                throw new Exception("Person not found");
+                throw new PersonNotFoundException();
 
             await _repository.DeleteAsync(person);
         }
