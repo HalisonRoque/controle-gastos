@@ -6,6 +6,7 @@ using webApi.Features.Persons.Repositories;
 using webApi.Features.Persons.Services;
 using webApi.Features.Transactions.Repositories;
 using webApi.Features.Transactions.Services;
+using webApi.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -34,6 +35,8 @@ app.UseSwaggerUI();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
+
+app.UseMiddleware<ExceptionMiddleware>();
 
 app.MapControllers();
 

@@ -14,8 +14,5 @@ namespace webApi.Features.Categories.Entities
         [Required]
         [MaxLength(128)]
         public string Purpose { get; set; } = string.Empty;
-
-        // Relacionamento com Transactions
-        public List<Transaction> Transactions { get; set; } = new();
     }
 }

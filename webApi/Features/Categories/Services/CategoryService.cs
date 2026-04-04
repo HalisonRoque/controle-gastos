@@ -1,4 +1,5 @@
 using webApi.Features.Categories.Entities;
+using webApi.Features.Categories.Error;
 using webApi.Features.Categories.Repositories;
 
 namespace webApi.Features.Categories.Services
@@ -19,14 +20,18 @@ namespace webApi.Features.Categories.Services
 
         public async Task<Category> CreateCategoryAsync(Category category)
         {
-            // 🔥 Validação de regra de negócio
-            var validPurposes = new[] { "Expense", "Income", "Both" };
+            var validPurposes = new[] { "Receita", "Despesa", "Ambas" };
 
-            if (!validPurposes.Contains(category.Purpose))
-                throw new Exception("Invalid purpose. Use: Expense, Income or Both");
+            var input = category.Purpose?.Trim();
 
-            if (string.IsNullOrWhiteSpace(category.Description))
-                throw new Exception("Description is required");
+            var match = validPurposes.FirstOrDefault(p =>
+                p.Equals(input, StringComparison.OrdinalIgnoreCase)
+            );
+
+            if (match == null)
+                throw new CategoryInvalidPurposeException();
+
+            category.Purpose = match;
 
             return await _repository.CreateCategoryAsync(category);
         }
