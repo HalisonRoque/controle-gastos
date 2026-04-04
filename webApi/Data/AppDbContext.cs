@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using webApi.Features.Categories.Entity;
-using webApi.Features.Persons.Entity;
-using webApi.Features.Transactions.Entity;
+using webApi.Features.Categories.Entities;
+using webApi.Features.Persons.Entities;
+using webApi.Features.Transactions.Entities;
 
 namespace webApi.Data
 {
@@ -13,5 +13,12 @@ namespace webApi.Data
         public DbSet<Person> Persons { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Transaction> Transactions { get; set; }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            base.OnModelCreating(modelBuilder);
+
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
+        }
     }
 }
