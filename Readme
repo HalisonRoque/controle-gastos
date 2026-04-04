@@ -4,7 +4,7 @@
 
 O projeto foi desenvolvido utilizando **arquitetura em camadas com organização por feature (Feature Folder)**, visando alta coesão, baixo acoplamento e facilidade de manutenção.
 
-A estrutura do back-end foi organizada por domínio (ex: Person, Category, Transaction), onde cada feature contém seus próprios:
+A estrutura do back-end foi organizada por domínio (ex: Persons, Categories, Transactions), onde cada feature contém seus próprios:
 
 * Controllers
 * Services
