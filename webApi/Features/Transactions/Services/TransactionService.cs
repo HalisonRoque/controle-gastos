@@ -65,5 +65,90 @@ namespace webApi.Features.Transactions.Services
                 CategoryId = created.CategoryId,
             };
         }
+
+        public async Task<PersonBalanceResponseDto> GetBalanceAsync(
+            int? personId,
+            int page,
+            int pageSize
+        )
+        {
+            page = page < 1 ? 1 : page;
+            pageSize = pageSize < 1 ? 10 : pageSize;
+
+            var transactions = await _repository.GetAllAsync();
+
+            if (personId.HasValue)
+                transactions = transactions.Where(t => t.PersonId == personId.Value).ToList();
+
+            var grouped = transactions
+                .GroupBy(t => new { t.PersonId, t.Person.Name })
+                .Select(g => new PersonBalanceDto
+                {
+                    PersonId = g.Key.PersonId,
+                    PersonName = g.Key.Name,
+
+                    TotalReceitas = g.Where(t =>
+                            t.Type.Equals("Receita", StringComparison.OrdinalIgnoreCase)
+                        )
+                        .Sum(t => t.Value),
+
+                    TotalDespesas = g.Where(t =>
+                            t.Type.Equals("Despesa", StringComparison.OrdinalIgnoreCase)
+                        )
+                        .Sum(t => t.Value),
+                })
+                .ToList();
+
+            var totalItems = grouped.Count;
+
+            var paginated = grouped.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+
+            var totalReceitas = grouped.Sum(x => x.TotalReceitas);
+            var totalDespesas = grouped.Sum(x => x.TotalDespesas);
+
+            return new PersonBalanceResponseDto
+            {
+                Data = paginated,
+                TotalReceitas = totalReceitas,
+                TotalDespesas = totalDespesas,
+                Page = page,
+                PageSize = pageSize,
+                TotalItems = totalItems,
+            };
+        }
+
+        public async Task<CategoryBalanceResponseDto> GetCategoryBalanceAsync()
+        {
+            var transactions = await _repository.GetAllAsync();
+
+            var grouped = transactions
+                .GroupBy(t => new { t.CategoryId, t.Category.Description })
+                .Select(g => new CategoryBalanceDto
+                {
+                    CategoryId = g.Key.CategoryId,
+                    CategoryDescription = g.Key.Description,
+
+                    TotalReceitas = g.Where(t =>
+                            t.Type.Equals("Receita", StringComparison.OrdinalIgnoreCase)
+                        )
+                        .Sum(t => t.Value),
+
+                    TotalDespesas = g.Where(t =>
+                            t.Type.Equals("Despesa", StringComparison.OrdinalIgnoreCase)
+                        )
+                        .Sum(t => t.Value),
+                })
+                .ToList();
+
+            var totalReceitas = grouped.Sum(x => x.TotalReceitas);
+            var totalDespesas = grouped.Sum(x => x.TotalDespesas);
+
+            return new CategoryBalanceResponseDto
+            {
+                Data = grouped,
+                TotalReceitas = totalReceitas,
+                TotalDespesas = totalDespesas,
+            };
+        }
     }
 }

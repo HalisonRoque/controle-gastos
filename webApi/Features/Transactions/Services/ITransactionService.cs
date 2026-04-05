@@ -6,5 +6,7 @@ namespace webApi.Features.Transactions.Services
     {
         Task<List<ResponseTransactionDto>> GetAllAsync();
         Task<ResponseTransactionDto> CreateAsync(CreateTransactionDto dto);
+        Task<PersonBalanceResponseDto> GetBalanceAsync(int? personId, int page, int pageSize);
+        Task<CategoryBalanceResponseDto> GetCategoryBalanceAsync();
     }
 }
