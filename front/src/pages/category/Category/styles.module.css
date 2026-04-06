@@ -1,0 +1,118 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.filterContainer {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1.0rem;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.tableHeader th {
+  text-align: center;
+  color: var(--text-default);
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.4rem;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 40%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 20%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 40%;
+}
+
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 1.2rem;
+}
+
+.editButton {
+  background-color: var(--info);
+  border-radius: 0.4rem;
+  color: var(--text-default);
+}
+
+.editButton:hover {
+  background-color: var(--info);
+  filter: brightness(0.9);
+  transition: 0.2s;
+}
+
+.deleteButton {
+  background-color: var(--error);
+  border-radius: 0.4rem;
+  color: var(--text-default);
+}
+
+.deleteButton:hover {
+  background-color: var(--error);
+  filter: brightness(0.8);
+  transition: 0.2s;
+}
+
+.successButton {
+  background-color: var(--info);
+  border-radius: 0.4rem;
+  color: var(--text-default);
+}
+
+.successButton:hover {
+  background-color: var(--info);
+  filter: brightness(0.9);
+  transition: 0.2s;
+}
+
+.addButton {
+  background-color: var(--success);
+  border-radius: 0.4rem;
+  color: var(--text-default);
+}
+
+.addButton:hover {
+  background-color: var(--success);
+  filter: brightness(0.9);
+  transition: 0.2s;
+}
+
+.buttonText {
+  margin-right: 0.4rem;
+}
+
+@media (max-width: 768px) {
+  .buttonText {
+    display: none;
+  }
+}

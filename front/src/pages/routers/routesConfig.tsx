@@ -22,6 +22,14 @@ const routesConfig: RouterConfigData[] = [
         type: "group",
         children: [
             {
+                id: "home",
+                title: "Home",
+                message: "Home",
+                type: "item",
+                icon: <HomeIcon />,
+                url: "/",
+            },
+            {
                 id: "category",
                 title: "Categorias",
                 message: "Categorias",
@@ -44,14 +52,6 @@ const routesConfig: RouterConfigData[] = [
                 type: "item",
                 icon: <RepeatOnIcon />,
                 url: "/transações",
-            },
-            {
-                id: "home",
-                title: "Home",
-                message: "Home",
-                type: "item",
-                icon: <HomeIcon />,
-                url: "/",
             },
         ],
     },
