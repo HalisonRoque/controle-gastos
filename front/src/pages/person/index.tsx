@@ -1,7 +1,7 @@
 import React from "react";
 
 // eslint-disable-next-line react-refresh/only-export-components
-const PersonList = React.lazy(() => import("./Person/index"));
+const PersonList = React.lazy(() => import("./Person/PersonList"));
 
 export const personRoutes = [
     {

@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using webApi.Features.Categories.Entities;
+using webApi.Features.Categories.DTOs;
 using webApi.Features.Categories.Services;
 
 namespace webApi.Features.Categories
@@ -17,14 +17,14 @@ namespace webApi.Features.Categories
 
         // GET: api/category
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? purpose)
         {
-            return Ok(await _service.GetAllCategoryAsync());
+            return Ok(await _service.GetAllCategoryAsync(purpose));
         }
 
         // POST: api/category
         [HttpPost("create")]
-        public async Task<IActionResult> Create([FromBody] Category category)
+        public async Task<IActionResult> Create([FromBody] CreateCategoryDto category)
         {
             var result = await _service.CreateCategoryAsync(category);
             return Ok(result);

@@ -59,30 +59,6 @@
   padding: 1.2rem;
 }
 
-.editButton {
-  background-color: var(--info);
-  border-radius: 0.4rem;
-  color: var(--text-default);
-}
-
-.editButton:hover {
-  background-color: var(--info);
-  filter: brightness(0.9);
-  transition: 0.2s;
-}
-
-.deleteButton {
-  background-color: var(--error);
-  border-radius: 0.4rem;
-  color: var(--text-default);
-}
-
-.deleteButton:hover {
-  background-color: var(--error);
-  filter: brightness(0.8);
-  transition: 0.2s;
-}
-
 .successButton {
   background-color: var(--info);
   border-radius: 0.4rem;

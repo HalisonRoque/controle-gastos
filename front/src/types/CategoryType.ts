@@ -3,3 +3,8 @@ export type CategoryType = {
     description: string;
     purpose: string;
 };
+
+export type CreateCategoryDTO = {
+    description: string;
+    purpose: string;
+}

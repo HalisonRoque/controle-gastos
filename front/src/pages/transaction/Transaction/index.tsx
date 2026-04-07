@@ -12,9 +12,6 @@ import {
     Button,
     IconButton,
 } from "@mui/material";
-
-import EditIcon from "@mui/icons-material/Edit";
-import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import type { TransactionType } from "../../../types/TransactionType";
@@ -72,7 +69,6 @@ export default function TransactionList() {
                             <TableCell>Tipo</TableCell>
                             <TableCell>Receita</TableCell>
                             <TableCell>Despesas</TableCell>
-                            <TableCell>Ações</TableCell>
                         </TableRow>
                     </TableHead>
 
@@ -84,19 +80,6 @@ export default function TransactionList() {
                                 <TableCell>{row.type}</TableCell>
                                 <TableCell>{row.receita}</TableCell>
                                 <TableCell>{row.despesa}</TableCell>
-                                <TableCell>
-                                    <div className={styles.actions}>
-                                        <IconButton size="small" className={styles.editButton}>
-                                            <span className={styles.buttonText}>Editar</span>
-                                            <EditIcon />
-                                        </IconButton>
-
-                                        <IconButton size="small" className={styles.deleteButton}>
-                                            <span className={styles.buttonText}>Deletar</span>
-                                            <DeleteIcon />
-                                        </IconButton>
-                                    </div>
-                                </TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
@@ -110,7 +93,7 @@ export default function TransactionList() {
                         Anterior
                     </Button>
 
-                    <span>{page + 1}</span>
+                    <span style={{ fontSize: "1.0rem", margin: "0 8px" }}>{page + 1}</span>
 
                     <Button
                         disabled={(page + 1) * pageSize >= filteredData.length}

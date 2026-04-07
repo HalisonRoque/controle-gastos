@@ -15,9 +15,13 @@ namespace webApi.Features.Persons.Services
             _repository = repository;
         }
 
-        public async Task<List<ResponsePersonDto>> GetAllAsync()
+        public async Task<List<ResponsePersonDto>> GetAllAsync(string? name)
         {
             var persons = await _repository.GetAllAsync();
+            if (!string.IsNullOrWhiteSpace(name))
+            {
+                persons = persons.Where(p => p.Name.ToLower().Contains(name.ToLower())).ToList();
+            }
 
             return persons
                 .Select(p => new ResponsePersonDto

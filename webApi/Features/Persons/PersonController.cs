@@ -15,11 +15,10 @@ namespace webApi.Features.Persons
             _service = service;
         }
 
-        // GET: api/person
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? name)
         {
-            return Ok(await _service.GetAllAsync());
+            return Ok(await _service.GetAllAsync(name));
         }
 
         // GET: api/person/1

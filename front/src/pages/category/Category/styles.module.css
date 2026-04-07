@@ -32,17 +32,12 @@
 
 .table th:nth-child(1),
 .table td:nth-child(1) {
-  width: 40%;
+  width: 50%;
 }
 
 .table th:nth-child(2),
 .table td:nth-child(2) {
-  width: 20%;
-}
-
-.table th:nth-child(3),
-.table td:nth-child(3) {
-  width: 40%;
+  width: 50%;
 }
 
 .actions {
@@ -57,30 +52,6 @@
   justify-content: end;
   align-items: center;
   padding: 1.2rem;
-}
-
-.editButton {
-  background-color: var(--info);
-  border-radius: 0.4rem;
-  color: var(--text-default);
-}
-
-.editButton:hover {
-  background-color: var(--info);
-  filter: brightness(0.9);
-  transition: 0.2s;
-}
-
-.deleteButton {
-  background-color: var(--error);
-  border-radius: 0.4rem;
-  color: var(--text-default);
-}
-
-.deleteButton:hover {
-  background-color: var(--error);
-  filter: brightness(0.8);
-  transition: 0.2s;
 }
 
 .successButton {
@@ -115,4 +86,45 @@
   .buttonText {
     display: none;
   }
+}
+
+.cancelButton {
+  background-color: var(--error);
+  color: var(--text-default);
+  border-radius: 0.4rem;
+}
+
+.cancelButton:hover {
+  background-color: var(--error);
+  filter: brightness(0.8);
+}
+
+.saveButton {
+  background-color: var(--success);
+  color: var(--text-default);
+  border-radius: 0.4rem;
+}
+
+.saveButton:hover {
+  background-color: var(--success);
+  filter: brightness(0.9);
+}
+
+.modalTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.modalContent {
+  color: var(--text-default);
+  font-size: 1.8rem;
+  gap: 1.2rem;
+}
+
+.modalActions {
+  padding: 1.2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }

@@ -7,14 +7,13 @@ import {
     TextField,
 } from "@mui/material";
 import { useState } from "react";
-import type { PersonType } from "../../../types/PersonType";
+import type { CreatePersonDTO } from "../../../types/PersonType";
 import styles from "./styles.module.css";
 
 type PersonModalProps = {
     open: boolean;
     onClose: () => void;
-    onSave: (person: PersonType) => void;
-    initialData?: PersonType | null;
+    onSave: (person: CreatePersonDTO) => void;
 };
 
 export default function PersonModal({
@@ -22,14 +21,17 @@ export default function PersonModal({
     onClose,
     onSave,
 }: PersonModalProps) {
-    const [error, setError] = useState<string | null>(null);
-    const [form, setForm] = useState<PersonType>({
+    const [errors, setErrors] = useState({
+        name: "",
+        age: "",
+    });
+    const [form, setForm] = useState<CreatePersonDTO>({
         name: "",
         age: 0,
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleChange = (field: keyof PersonType, value: any) => {
+    const handleChange = (field: keyof CreatePersonDTO, value: any) => {
         setForm((prev) => ({
             ...prev,
             [field]: value,
@@ -37,17 +39,51 @@ export default function PersonModal({
     };
 
     const handleSave = () => {
-        if (form.age <= 0) {
-            setError("Idade deve ser maior que zero");
-            return;
+        const newErrors = {
+            name: "",
+            age: "",
+        };
+
+        if (!form.name.trim()) {
+            newErrors.name = "Nome deve ser preenchido!";
         }
 
-        setError(null);
+        if (form.age <= 0) {
+            newErrors.age = "Idade deve ser maior que zero";
+        }
+
+        setErrors(newErrors);
+
+        if (newErrors.name || newErrors.age) return;
+
         onSave(form);
+
+        setForm({
+            name: "",
+            age: 0,
+        });
+
+        setErrors({
+            name: "",
+            age: "",
+        });
+    };
+
+    const handleClose = () => {
+        setForm({
+            name: "",
+            age: 0,
+        });
+        setErrors((prev) => ({ ...prev, age: "" }));
+        onClose();
     };
 
     return (
-        <Dialog open={open} onClose={onClose} fullWidth maxWidth="sm">
+        <Dialog
+            open={open}
+            onClose={handleClose}
+            fullWidth maxWidth="sm"
+        >
 
             <DialogTitle className={styles.modalTitle}>
                 Nova Pessoa
@@ -59,7 +95,12 @@ export default function PersonModal({
                     fullWidth
                     margin="normal"
                     value={form.name}
-                    onChange={(e) => handleChange("name", e.target.value)}
+                    error={!!errors.name}
+                    helperText={errors.name}
+                    onChange={(e) => {
+                        handleChange("name", e.target.value);
+                        setErrors((prev) => ({ ...prev, name: "" }));
+                    }}
                 />
 
                 <TextField
@@ -67,20 +108,27 @@ export default function PersonModal({
                     type="number"
                     fullWidth
                     margin="normal"
-                    value={form.age}
-                    inputProps={{ min: 0 }}
-                    error={!!error}
-                    helperText={error}
+                    value={form.age === 0 ? "" : form.age}
+                    slotProps={{
+                        input: {
+                            inputProps: { min: 0 },
+                        },
+                    }}
+                    error={!!errors.age}
+                    helperText={errors.age}
                     onChange={(e) => {
-                        const value = Math.max(0, Number(e.target.value));
-                        handleChange("age", value);
-                        setError(null);
+                        const value = e.target.value;
+                        handleChange("age", value === "" ? 0 : Number(value));
+                        setErrors((prev) => ({ ...prev, age: "" }));
                     }}
                 />
             </DialogContent>
 
             <DialogActions className={styles.modalActions}>
-                <Button className={styles.cancelButton} onClick={onClose}>
+                <Button
+                    className={styles.cancelButton}
+                    onClick={handleClose}
+                >
                     Cancelar
                 </Button>
 
