@@ -116,3 +116,44 @@
     display: none;
   }
 }
+
+.modalTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+}
+
+.modalContent {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.modalActions {
+  padding: 1.2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+
+.cancelButton {
+  background-color: var(--error);
+  color: var(--text-default);
+  border-radius: 0.4rem;
+}
+
+.cancelButton:hover {
+  background-color: var(--error);
+  filter: brightness(0.8);
+}
+
+.saveButton {
+  background-color: var(--success);
+  color: var(--text-default);
+  border-radius: 0.4rem;
+}
+
+.saveButton:hover {
+  background-color: var(--success);
+  filter: brightness(0.9);
+}

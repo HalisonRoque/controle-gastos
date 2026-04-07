@@ -12,20 +12,15 @@ import {
     Button,
     IconButton,
 } from "@mui/material";
-
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
-
-type IPersonType = {
-    id: number;
-    name: string;
-    age: number;
-};
+import type { PersonType } from "../../../types/PersonType";
+import CreatePersonModal from "./CreatePersonModal";
 
 export default function PersonList() {
-    const [data] = useState<IPersonType[]>([
+    const [data] = useState<PersonType[]>([
         { id: 1, name: "João", age: 25 },
         { id: 2, name: "Maria", age: 30 },
         { id: 3, name: "Carlos", age: 22 },
@@ -33,7 +28,7 @@ export default function PersonList() {
         { id: 2, name: "Maria", age: 30 },
         { id: 3, name: "Carlos", age: 22 },
     ]);
-
+    const [openCreate, setOpenCreate] = useState(false);
     const [filter, setFilter] = useState("");
     const [page, setPage] = useState(0);
 
@@ -119,11 +114,23 @@ export default function PersonList() {
                 </div>
             </AppCard>
             <div className={styles.footer}>
-                <IconButton size="small" className={styles.addButton}>
+                <IconButton
+                    size="small"
+                    className={styles.addButton}
+                    onClick={() => setOpenCreate(true)}
+                >
                     <span className={styles.buttonText}>Novo</span>
                     <AddIcon />
                 </IconButton>
             </div>
+            <CreatePersonModal
+                open={openCreate}
+                onClose={() => setOpenCreate(false)}
+                onSave={(data) => {
+                    console.log("create", data);
+                    setOpenCreate(false);
+                }}
+            />
         </div>
     );
 }

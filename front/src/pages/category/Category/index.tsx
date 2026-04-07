@@ -17,15 +17,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
-
-type ICategoryType = {
-    id: number;
-    description: string;
-    purpose: string;
-};
+import type { CategoryType } from "../../../types/CategoryType";
 
 export default function CategoryList() {
-    const [data] = useState<ICategoryType[]>([
+    const [data] = useState<CategoryType[]>([
         { id: 1, description: "João", purpose: '25' },
         { id: 2, description: "Maria", purpose: '30' },
         { id: 3, description: "Carlos", purpose: '22' },

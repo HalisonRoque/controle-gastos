@@ -17,20 +17,10 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
-
-type ITransactionType = {
-    id: number;
-    nome: string;
-    description: string;
-    type: string;
-    personId: number;
-    categoryId: number;
-    receita: number;
-    despesa: number;
-};
+import type { TransactionType } from "../../../types/TransactionType";
 
 export default function TransactionList() {
-    const [data] = useState<ITransactionType[]>([
+    const [data] = useState<TransactionType[]>([
         { id: 1, nome: "joão", description: "João", type: '-', personId: 1, categoryId: 1, receita: 0, despesa: 10 },
         { id: 2, nome: "maria", description: "Maria", type: '-', personId: 1, categoryId: 1, receita: 0, despesa: 10 },
         { id: 3, nome: "carlos", description: "Carlos", type: '-', personId: 1, categoryId: 1, receita: 0, despesa: 10 },
