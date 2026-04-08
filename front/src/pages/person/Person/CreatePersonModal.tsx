@@ -16,7 +16,7 @@ type PersonModalProps = {
     onSave: (person: CreatePersonDTO) => void;
 };
 
-export default function PersonModal({
+export default function CreatePersonModal({
     open,
     onClose,
     onSave,

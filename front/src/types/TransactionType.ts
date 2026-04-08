@@ -8,3 +8,11 @@ export type TransactionType = {
     receita: number;
     despesa: number;
 };
+
+export type CreateTransactionDTO = {
+    description: string;
+    type: string;
+    value: number;
+    personId: number;
+    categoryId: number;
+}

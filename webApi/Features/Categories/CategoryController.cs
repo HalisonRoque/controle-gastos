@@ -15,7 +15,7 @@ namespace webApi.Features.Categories
             _service = service;
         }
 
-        // GET: api/category
+        // GET: /api/category
         [HttpGet("all")]
         public async Task<IActionResult> GetAll([FromQuery] string? purpose)
         {

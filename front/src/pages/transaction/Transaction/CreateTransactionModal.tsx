@@ -6,37 +6,42 @@ import {
     Button,
     TextField,
     FormControl,
-    MenuItem,
-    Select,
     InputLabel,
+    Select,
+    MenuItem,
     FormHelperText,
 } from "@mui/material";
 import { useState } from "react";
-import type { CreateCategoryDTO } from "../../../types/CategoryType";
-import styles from "./styles.module.css";
 import { PURPOSE_OPTIONS } from "../../../constants/purpose";
+import type { CreateTransactionDTO } from "../../../types/TransactionType";
+import styles from "./styles.module.css";
 
-type CategoryModalProps = {
+type TransactionModalProps = {
     open: boolean;
     onClose: () => void;
-    onSave: (person: CreateCategoryDTO) => void;
+    onSave: (person: CreateTransactionDTO) => void;
 };
 
-export default function CreateCategoryModal({
+export default function CreateTransactionModal({
     open,
     onClose,
     onSave,
-}: CategoryModalProps) {
+}: TransactionModalProps) {
     const [errors, setErrors] = useState({
-        purpose: "",
+        type: "",
+        value: "",
+        personId: "",
     });
-    const [form, setForm] = useState<CreateCategoryDTO>({
-        purpose: "",
+    const [form, setForm] = useState<CreateTransactionDTO>({
         description: "",
+        type: "",
+        value: 0,
+        personId: 0,
+        categoryId: 0,
     });
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const handleChange = (field: keyof CreateCategoryDTO, value: any) => {
+    const handleChange = (field: keyof CreateTransactionDTO, value: any) => {
         setForm((prev) => ({
             ...prev,
             [field]: value,
@@ -45,33 +50,51 @@ export default function CreateCategoryModal({
 
     const handleSave = () => {
         const newErrors = {
-            purpose: "",
+            type: "",
+            value: "",
+            personId: "",
         };
 
-        if (!form.purpose.trim()) {
-            newErrors.purpose = "Finalidade deve ser preenchida!";
+        if (!form.type.trim()) {
+            newErrors.type = "Tipo deve ser preenchido!";
+        }
+        if (form.value === null) {
+            newErrors.value = "Valor deve ser preenchido";
+        }
+        if (form.personId === null) {
+            newErrors.personId = "Pessoa deve ser preenchido";
         }
 
         setErrors(newErrors);
-        if (newErrors.purpose) return;
+
+        if (newErrors.value || newErrors.type || newErrors.personId) return;
 
         onSave(form);
+
         setForm({
-            purpose: "",
             description: "",
+            type: "",
+            value: 0,
+            personId: 0,
+            categoryId: 0,
         });
 
         setErrors({
-            purpose: "",
+            type: "",
+            value: "",
+            personId: "",
         });
     };
 
     const handleClose = () => {
         setForm({
-            purpose: "",
             description: "",
+            type: "",
+            value: 0,
+            personId: 0,
+            categoryId: 0,
         });
-        setErrors((prev) => ({ ...prev, purpose: "" }));
+        setErrors((prev) => ({ ...prev }));
         onClose();
     };
 
@@ -81,21 +104,22 @@ export default function CreateCategoryModal({
             onClose={handleClose}
             fullWidth maxWidth="sm"
         >
+
             <DialogTitle className={styles.modalTitle}>
-                Nova Categoria
+                Nova Transação
             </DialogTitle>
 
             <DialogContent className={styles.modalContent}>
-                <FormControl fullWidth margin="normal" error={!!errors.purpose}>
-                    <InputLabel id="purpose-label">Finalidade</InputLabel>
+                <FormControl fullWidth margin="normal" error={!!errors.type}>
+                    <InputLabel id="purpose-label">Tipo</InputLabel>
 
                     <Select
-                        labelId="purpose-label"
-                        value={form.purpose}
+                        labelId="type-label"
+                        value={form.type}
                         label="Finalidade"
                         onChange={(e) => {
-                            handleChange("purpose", e.target.value);
-                            setErrors((prev) => ({ ...prev, purpose: "" }));
+                            handleChange("type", e.target.value);
+                            setErrors((prev) => ({ ...prev, type: "" }));
                         }}
                     >
                         <MenuItem value="">
@@ -108,20 +132,10 @@ export default function CreateCategoryModal({
                             </MenuItem>
                         ))}
                     </Select>
-                    {errors.purpose &&
-                        <FormHelperText>{errors.purpose}</FormHelperText>
+                    {errors.type &&
+                        <FormHelperText>{errors.type}</FormHelperText>
                     }
                 </FormControl>
-
-                <TextField
-                    label="Descrição"
-                    fullWidth
-                    margin="normal"
-                    value={form.description}
-                    onChange={(e) => {
-                        handleChange("description", e.target.value);
-                    }}
-                />
             </DialogContent>
 
             <DialogActions className={styles.modalActions}>
@@ -140,6 +154,8 @@ export default function CreateCategoryModal({
                     Salvar
                 </Button>
             </DialogActions>
+
         </Dialog>
     );
+
 }
