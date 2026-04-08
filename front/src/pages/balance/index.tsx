@@ -5,7 +5,7 @@ const PersonBalanceList = React.lazy(() => import("./Balance/BalanceList"));
 
 export const balanceRoutes = [
     {
-        path: "/total/contas",
+        path: "/total/pessoas",
         element: <PersonBalanceList />,
     },
 ];

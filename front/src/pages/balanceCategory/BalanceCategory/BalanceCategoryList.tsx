@@ -10,20 +10,20 @@ import {
     TableBody,
     Button,
 } from "@mui/material";
-import { getPersonBalance } from "../../../../services/transaction";
-import type { PersonBalanceType } from "../../../types/TransactionType";
+import { getCategoryBalance } from "../../../../services/transaction";
+import type { CategoryBalanceType } from "../../../types/TransactionType";
 
 export default function CategoryBalanceList() {
-    const [data, setData] = useState<PersonBalanceType[]>([]);
+    const [data, setData] = useState<CategoryBalanceType[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [dataError, setDataError] = useState(false);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const pageSize = 5;
 
     const [totals, setTotals] = useState({
         totalIncome: 0,
         totalExpenses: 0,
-        balance: 0,
+        balanceItem: 0,
     });
 
     const formatCurrency = (value: number) => {
@@ -34,13 +34,13 @@ export default function CategoryBalanceList() {
     };
 
     useEffect(() => {
-        getPersonBalance()
+        getCategoryBalance()
             .then((resp) => {
                 setData(resp.data);
                 setTotals({
                     totalIncome: resp.totalIncome,
                     totalExpenses: resp.totalExpenses,
-                    balance: resp.balance,
+                    balanceItem: resp.balance,
                 });
                 setDataLoaded(true);
             })
@@ -56,9 +56,14 @@ export default function CategoryBalanceList() {
         return "blue";
     };
 
+    const paginatedData = data.slice(
+        page * pageSize,
+        (page + 1) * pageSize
+    );
+
     return (
         <div className={styles.container}>
-            <h2>Totais por Pessoa</h2>
+            <h2>Totais por Categoria</h2>
             <AppCard>
                 {!dataLoaded ? (
                     <div>Carregando...</div>
@@ -69,7 +74,7 @@ export default function CategoryBalanceList() {
                         <Table className={styles.table}>
                             <TableHead>
                                 <TableRow className={styles.tableHeader}>
-                                    <TableCell>Pessoa</TableCell>
+                                    <TableCell>Categoria</TableCell>
                                     <TableCell>Receitas</TableCell>
                                     <TableCell>Despesas</TableCell>
                                     <TableCell>Saldo</TableCell>
@@ -77,9 +82,9 @@ export default function CategoryBalanceList() {
                             </TableHead>
 
                             <TableBody>
-                                {data.map((row) => (
-                                    <TableRow key={row.personId}>
-                                        <TableCell>{row.personName}</TableCell>
+                                {paginatedData.map((row) => (
+                                    <TableRow key={row.categoryId}>
+                                        <TableCell>{row.categoryDescription}</TableCell>
                                         <TableCell>
                                             {formatCurrency(row.totalIncome)}
                                         </TableCell>
@@ -87,10 +92,10 @@ export default function CategoryBalanceList() {
                                             {formatCurrency(row.totalExpenses)}
                                         </TableCell>
                                         <TableCell style={{
-                                            color: getSaldoColor(row.balance),
+                                            color: getSaldoColor(row.balanceItem),
                                             fontWeight: "bold"
                                         }}>
-                                            {formatCurrency(row.balance)}
+                                            {formatCurrency(row.balanceItem)}
                                         </TableCell>
                                     </TableRow>
                                 ))}
@@ -99,7 +104,7 @@ export default function CategoryBalanceList() {
 
                         <div className={styles.footer}>
                             <Button
-                                disabled={page === 1}
+                                disabled={page === 0}
                                 onClick={() => setPage((p) => p - 1)}
                             >
                                 Anterior
@@ -108,7 +113,7 @@ export default function CategoryBalanceList() {
                             <span style={{ fontSize: "1.0rem", margin: "0 8px" }}>{page + 1}</span>
 
                             <Button
-                                disabled={data.length < pageSize}
+                                disabled={(page + 1) * pageSize >= data.length}
                                 onClick={() => setPage((p) => p + 1)}
                             >
                                 Próxima
@@ -142,11 +147,11 @@ export default function CategoryBalanceList() {
 
                                 <TableCell
                                     style={{
-                                        color: getSaldoColor(totals.balance),
+                                        color: getSaldoColor(totals.balanceItem),
                                         fontWeight: "bold",
                                     }}
                                 >
-                                    <strong>{formatCurrency(totals.balance)}</strong>
+                                    <strong>{formatCurrency(totals.balanceItem)}</strong>
                                 </TableCell>
                             </TableRow>
                         </TableBody>

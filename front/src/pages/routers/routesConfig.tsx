@@ -4,6 +4,7 @@ import PeopleIcon from '@mui/icons-material/People';
 import HomeIcon from '@mui/icons-material/Home';
 import RepeatOnIcon from '@mui/icons-material/RepeatOn';
 import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
+import AllInboxIcon from '@mui/icons-material/AllInbox';
 
 export interface RouterConfigData {
     id: string;
@@ -55,12 +56,20 @@ const routesConfig: RouterConfigData[] = [
                 url: "/transações",
             },
             {
-                id: "balance",
-                title: "Total Contas",
-                message: "Total Contas",
+                id: "categotyBalance",
+                title: "Total Categorias",
+                message: "Total Categorias",
                 type: "item",
                 icon: <PointOfSaleIcon />,
-                url: "/total/contas",
+                url: "/total/categorias",
+            },
+            {
+                id: "balance",
+                title: "Total Pessoas",
+                message: "Total Pessoas",
+                type: "item",
+                icon: <AllInboxIcon />,
+                url: "/total/pessoas",
             },
         ],
     },

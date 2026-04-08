@@ -145,18 +145,18 @@ namespace webApi.Features.Transactions.Services
                 .Select(c => new CategoryBalanceDto
                 {
                     CategoryId = c.Id,
-                    CategoryDescription = c.Description,
+                    CategoryDescription = c.Purpose,
 
                     TotalIncome = transactions
                         .Where(t =>
-                            t.Category == c.Description
+                            t.Category == c.Purpose
                             && t.Type.Equals("Receita", StringComparison.OrdinalIgnoreCase)
                         )
                         .Sum(t => t.Value),
 
                     TotalExpenses = transactions
                         .Where(t =>
-                            t.Category == c.Description
+                            t.Category == c.Purpose
                             && t.Type.Equals("Despesa", StringComparison.OrdinalIgnoreCase)
                         )
                         .Sum(t => t.Value),

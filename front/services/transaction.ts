@@ -21,3 +21,9 @@ export const getPersonBalance = async (
     const { data } = await api.get("/api/transaction/balance", {});
     return data;
 };
+
+export const getCategoryBalance = async (
+) => {
+    const { data } = await api.get("/api/transaction/balance/category", {});
+    return data;
+};

@@ -4,7 +4,7 @@ import { categoryRoutes } from "../category";
 import { personRoutes } from "../person";
 import { transactionRoutes } from "../transaction";
 import { balanceRoutes } from "../balance";
-// depois você adiciona outras
+import { categoryBalanceRoutes } from "../balanceCategory";
 
 const AppRoutes = () => {
     return useRoutes([
@@ -13,6 +13,7 @@ const AppRoutes = () => {
         ...personRoutes,
         ...transactionRoutes,
         ...balanceRoutes,
+        ...categoryBalanceRoutes,
     ]);
 };
 

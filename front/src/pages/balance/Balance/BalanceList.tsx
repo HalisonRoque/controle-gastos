@@ -17,7 +17,7 @@ export default function PersonBalanceList() {
     const [data, setData] = useState<PersonBalanceType[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [dataError, setDataError] = useState(false);
-    const [page, setPage] = useState(1);
+    const [page, setPage] = useState(0);
     const pageSize = 5;
 
     const [totals, setTotals] = useState({
@@ -56,6 +56,11 @@ export default function PersonBalanceList() {
         return "blue";
     };
 
+    const paginatedData = data.slice(
+        page * pageSize,
+        (page + 1) * pageSize
+    );
+
     return (
         <div className={styles.container}>
             <h2>Totais por Pessoa</h2>
@@ -77,7 +82,7 @@ export default function PersonBalanceList() {
                             </TableHead>
 
                             <TableBody>
-                                {data.map((row) => (
+                                {paginatedData.map((row) => (
                                     <TableRow key={row.personId}>
                                         <TableCell>{row.personName}</TableCell>
                                         <TableCell>
@@ -99,7 +104,7 @@ export default function PersonBalanceList() {
 
                         <div className={styles.footer}>
                             <Button
-                                disabled={page === 1}
+                                disabled={page === 0}
                                 onClick={() => setPage((p) => p - 1)}
                             >
                                 Anterior
@@ -108,7 +113,7 @@ export default function PersonBalanceList() {
                             <span style={{ fontSize: "1.0rem", margin: "0 8px" }}>{page + 1}</span>
 
                             <Button
-                                disabled={data.length < pageSize}
+                                disabled={(page + 1) * pageSize >= data.length}
                                 onClick={() => setPage((p) => p + 1)}
                             >
                                 Próxima

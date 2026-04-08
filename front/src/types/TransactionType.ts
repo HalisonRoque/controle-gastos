@@ -25,3 +25,11 @@ export type PersonBalanceType = {
     totalItem: number;
     balance: number;
 };
+
+export type CategoryBalanceType = {
+    categoryId: number;
+    totalIncome: number;
+    totalExpenses: number;
+    balanceItem: number;
+    categoryDescription: string;
+}

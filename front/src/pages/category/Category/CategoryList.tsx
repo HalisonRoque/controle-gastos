@@ -30,7 +30,6 @@ export default function CategoryList() {
     const [loadingFilter, setLoadingFilter] = useState(false);
     const [search, setSearch] = useState("");
     const { enqueueSnackbar } = useSnackbar();
-
     const [filter, setFilter] = useState("");
     const [page, setPage] = useState(0);
     const pageSize = 5;

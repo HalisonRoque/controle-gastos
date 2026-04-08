@@ -35,7 +35,7 @@ namespace webApi.Features.Transactions.Controllers
             return Ok(result);
         }
 
-        [HttpGet("category/balance")]
+        [HttpGet("balance/category")]
         public async Task<IActionResult> GetCategoryBalance()
         {
             var result = await _service.GetCategoryBalanceAsync();
