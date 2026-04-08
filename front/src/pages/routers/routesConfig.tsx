@@ -56,14 +56,6 @@ const routesConfig: RouterConfigData[] = [
                 url: "/transações",
             },
             {
-                id: "categotyBalance",
-                title: "Total Categorias",
-                message: "Total Categorias",
-                type: "item",
-                icon: <PointOfSaleIcon />,
-                url: "/total/categorias",
-            },
-            {
                 id: "balance",
                 title: "Total Pessoas",
                 message: "Total Pessoas",
@@ -71,6 +63,14 @@ const routesConfig: RouterConfigData[] = [
                 icon: <AllInboxIcon />,
                 url: "/total/pessoas",
             },
+            {
+                id: "categotyBalance",
+                title: "Total Categorias",
+                message: "Total Categorias",
+                type: "item",
+                icon: <PointOfSaleIcon />,
+                url: "/total/categorias",
+            },            
         ],
     },
 ];
