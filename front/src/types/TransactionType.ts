@@ -1,12 +1,12 @@
 export type TransactionType = {
     id: number;
-    nome: string;
+    name: string;
     description: string;
+    value: number;
     type: string;
+    category: string;
+    person: string;
     personId: number;
-    categoryId: number;
-    receita: number;
-    despesa: number;
 };
 
 export type CreateTransactionDTO = {

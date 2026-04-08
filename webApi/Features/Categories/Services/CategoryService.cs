@@ -35,20 +35,11 @@ namespace webApi.Features.Categories.Services
 
         public async Task<ResponseCategoryDto> CreateCategoryAsync(CreateCategoryDto dto)
         {
-            var validPurposes = new[] { "Receita", "Despesa", "Ambas" };
-
-            var input = dto.Purpose?.Trim();
-
-            var match = validPurposes.FirstOrDefault(c =>
-                c.Equals(input, StringComparison.OrdinalIgnoreCase)
-            );
-
-            if (match == null)
-                throw new CategoryInvalidPurposeException();
-
-            dto.Purpose = match;
-
-            var category = new Category { Description = dto.Description, Purpose = dto.Purpose };
+            var category = new Category
+            {
+                Description = dto.Description,
+                Purpose = dto.Purpose?.Trim() ?? string.Empty,
+            };
 
             var created = await _repository.CreateCategoryAsync(category);
 
@@ -57,6 +48,21 @@ namespace webApi.Features.Categories.Services
                 Id = created.Id,
                 Description = created.Description,
                 Purpose = created.Purpose,
+            };
+        }
+
+        public async Task<ResponseCategoryDto> GetCategoryByIdAsync(int id)
+        {
+            var category = await _repository.GetCategoryByIdAsync(id);
+
+            if (category == null)
+                throw new CategoryNotFoundException();
+
+            return new ResponseCategoryDto
+            {
+                Id = category.Id,
+                Description = category.Description,
+                Purpose = category.Purpose,
             };
         }
     }

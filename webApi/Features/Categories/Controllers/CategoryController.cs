@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using webApi.Features.Categories.DTOs;
 using webApi.Features.Categories.Services;
 
-namespace webApi.Features.Categories
+namespace webApi.Features.Categories.Controllers
 {
     [ApiController]
     [Route("api/category")]
@@ -28,6 +28,13 @@ namespace webApi.Features.Categories
         {
             var result = await _service.CreateCategoryAsync(category);
             return Ok(result);
+        }
+
+        // POST: api/category/id
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetById(int id)
+        {
+            return Ok(await _service.GetCategoryByIdAsync(id));
         }
     }
 }

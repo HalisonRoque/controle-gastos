@@ -1,10 +1,10 @@
-using webApi.Features.Transactions.Entities;
+using TransactionEntity = webApi.Features.Transactions.Entities.Transaction;
 
 namespace webApi.Features.Transactions.Repositories
 {
     public interface ITransactionRepository
     {
-        Task<List<Transaction>> GetAllAsync();
-        Task<Transaction> CreateAsync(Transaction transaction);
+        Task<List<TransactionEntity>> GetAllAsync();
+        Task<TransactionEntity> CreateAsync(TransactionEntity transaction);
     }
 }

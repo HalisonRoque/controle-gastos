@@ -6,5 +6,6 @@ namespace webApi.Features.Categories.Services
     {
         Task<List<ResponseCategoryDto>> GetAllCategoryAsync(string? purpose);
         Task<ResponseCategoryDto> CreateCategoryAsync(CreateCategoryDto dto);
+        Task<ResponseCategoryDto> GetCategoryByIdAsync(int id);
     }
 }

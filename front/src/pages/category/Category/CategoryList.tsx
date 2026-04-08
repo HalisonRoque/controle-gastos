@@ -11,10 +11,7 @@ import {
     Button,
     IconButton,
     CircularProgress,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
+    TextField,
 } from "@mui/material";
 import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
@@ -22,7 +19,6 @@ import type { CategoryType, CreateCategoryDTO } from "../../../types/CategoryTyp
 import { useSnackbar } from "notistack";
 import { createCategory, getCategory } from "../../../../services/category";
 import CreateCategoryModal from "./CreateCategoryModal";
-import { PURPOSE_OPTIONS } from "../../../constants/purpose";
 
 export default function CategoryList() {
     const [data, setData] = useState<CategoryType[]>([]);
@@ -93,26 +89,12 @@ export default function CategoryList() {
         <div className={styles.container}>
             <h2>Lista de Categorias</h2>
             <div className={styles.filterContainer}>
-                <FormControl size="small" style={{ minWidth: 160 }}>
-                    <InputLabel id="purpose-filter-label">Finalidade</InputLabel>
-
-                    <Select
-                        labelId="purpose-filter-label"
-                        value={search}
-                        label="Finalidade"
-                        onChange={(e) => setSearch(e.target.value)}
-                    >
-                        <MenuItem value="">
-                            <em>Selecione...</em>
-                        </MenuItem>
-
-                        {PURPOSE_OPTIONS.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                </FormControl>
+                <TextField
+                    label="Finalidade"
+                    size="small"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
 
                 <IconButton
                     size="small"

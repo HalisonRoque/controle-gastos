@@ -8,8 +8,8 @@ namespace webApi.Features.Transactions.DTOs
 
         public decimal Value { get; set; }
 
-        public int PersonId { get; set; }
-
         public int CategoryId { get; set; }
+
+        public int PersonId { get; set; }
     }
 }

@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using webApi.Features.Transactions.DTOs;
 using webApi.Features.Transactions.Services;
 
-namespace webApi.Features.Transactions
+namespace webApi.Features.Transactions.Controllers
 {
     [ApiController]
     [Route("api/transaction")]
@@ -16,9 +16,9 @@ namespace webApi.Features.Transactions
         }
 
         [HttpGet("all")]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> GetAll([FromQuery] string? person)
         {
-            return Ok(await _service.GetAllAsync());
+            return Ok(await _service.GetAllAsync(person));
         }
 
         [HttpPost("create")]
@@ -28,7 +28,7 @@ namespace webApi.Features.Transactions
             return Ok(result);
         }
 
-        [HttpGet("transaction/balance")]
+        [HttpGet("balance")]
         public async Task<IActionResult> GetBalance(
             [FromQuery] int? personId,
             [FromQuery] int page = 1,

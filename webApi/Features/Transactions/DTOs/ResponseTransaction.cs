@@ -8,10 +8,12 @@ namespace webApi.Features.Transactions.DTOs
 
         public string Type { get; set; } = string.Empty;
 
+        public string Category { get; set; } = string.Empty;
+
         public decimal Value { get; set; }
 
         public int PersonId { get; set; }
 
-        public int CategoryId { get; set; }
+        public string Person { get; set; } = string.Empty;
     }
 }

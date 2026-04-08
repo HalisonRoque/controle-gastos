@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using webApi.Features.Persons.DTOs;
 using webApi.Features.Persons.Services;
 
-namespace webApi.Features.Persons
+namespace webApi.Features.Persons.Controllers
 {
     [ApiController]
     [Route("api/person")]

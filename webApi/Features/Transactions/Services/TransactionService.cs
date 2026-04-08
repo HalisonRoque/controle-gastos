@@ -1,8 +1,11 @@
+using webApi.Features.Categories.Error;
+using webApi.Features.Categories.Repositories;
 using webApi.Features.Persons.Error;
 using webApi.Features.Persons.Repositories;
 using webApi.Features.Transactions.DTOs;
-using webApi.Features.Transactions.Entities;
+using webApi.Features.Transactions.Error;
 using webApi.Features.Transactions.Repositories;
+using TransactionEntity = webApi.Features.Transactions.Entities.Transaction;
 
 namespace webApi.Features.Transactions.Services
 {
@@ -10,19 +13,29 @@ namespace webApi.Features.Transactions.Services
     {
         private readonly ITransactionRepository _repository;
         private readonly IPersonRepository _personRepository;
+        private readonly ICategoryRepository _categoryRepository;
 
         public TransactionService(
             ITransactionRepository repository,
-            IPersonRepository personRepository
+            IPersonRepository personRepository,
+            ICategoryRepository categoryRepository
         )
         {
             _repository = repository;
             _personRepository = personRepository;
+            _categoryRepository = categoryRepository;
         }
 
-        public async Task<List<ResponseTransactionDto>> GetAllAsync()
+        public async Task<List<ResponseTransactionDto>> GetAllAsync(string? person)
         {
             var transactions = await _repository.GetAllAsync();
+
+            if (!string.IsNullOrWhiteSpace(person))
+            {
+                transactions = transactions
+                    .Where(t => t.Person.Name.ToLower().Contains(person.ToLower()))
+                    .ToList();
+            }
 
             return transactions
                 .Select(t => new ResponseTransactionDto
@@ -31,8 +44,9 @@ namespace webApi.Features.Transactions.Services
                     Description = t.Description,
                     Type = t.Type,
                     Value = t.Value,
+                    Person = t.Person.Name,
                     PersonId = t.PersonId,
-                    CategoryId = t.CategoryId,
+                    Category = t.Category,
                 })
                 .ToList();
         }
@@ -44,13 +58,27 @@ namespace webApi.Features.Transactions.Services
             if (person == null)
                 throw new PersonNotFoundException();
 
-            var transaction = new Transaction
+            if (person.Age < 18 && dto.Type.ToLower() == "receita")
+                throw new UnderagePersonExpenseOnlyException();
+
+            var category = await _categoryRepository.GetCategoryByIdAsync(dto.CategoryId);
+
+            if (category == null)
+                throw new CategoryNotFoundException();
+
+            var validTypes = new[] { "Receita", "Despesa" };
+
+            var match = validTypes.FirstOrDefault(t =>
+                t.Equals(dto.Type, StringComparison.OrdinalIgnoreCase)
+            );
+
+            var transaction = new TransactionEntity
             {
                 Description = dto.Description,
-                Type = dto.Type,
+                Type = match!,
                 Value = dto.Value,
+                Category = category.Purpose,
                 PersonId = dto.PersonId,
-                CategoryId = dto.CategoryId,
             };
 
             var created = await _repository.CreateAsync(transaction);
@@ -61,8 +89,9 @@ namespace webApi.Features.Transactions.Services
                 Description = created.Description,
                 Type = created.Type,
                 Value = created.Value,
+                Category = created.Category,
+                Person = person.Name,
                 PersonId = created.PersonId,
-                CategoryId = created.CategoryId,
             };
         }
 
@@ -75,45 +104,46 @@ namespace webApi.Features.Transactions.Services
             page = page < 1 ? 1 : page;
             pageSize = pageSize < 1 ? 10 : pageSize;
 
+            var persons = await _personRepository.GetAllAsync();
             var transactions = await _repository.GetAllAsync();
 
             if (personId.HasValue)
-                transactions = transactions.Where(t => t.PersonId == personId.Value).ToList();
+                persons = persons.Where(p => p.Id == personId.Value).ToList();
 
-            var grouped = transactions
-                .GroupBy(t => new { t.PersonId, t.Person.Name })
-                .Select(g => new PersonBalanceDto
+            var grouped = persons
+                .Select(p => new PersonBalanceDto
                 {
-                    PersonId = g.Key.PersonId,
-                    PersonName = g.Key.Name,
+                    PersonId = p.Id,
+                    PersonName = p.Name,
 
-                    TotalReceitas = g.Where(t =>
-                            t.Type.Equals("Receita", StringComparison.OrdinalIgnoreCase)
+                    TotalIncome = transactions
+                        .Where(t =>
+                            t.PersonId == p.Id
+                            && t.Type.Equals("Receita", StringComparison.OrdinalIgnoreCase)
                         )
                         .Sum(t => t.Value),
 
-                    TotalDespesas = g.Where(t =>
-                            t.Type.Equals("Despesa", StringComparison.OrdinalIgnoreCase)
+                    TotalExpenses = transactions
+                        .Where(t =>
+                            t.PersonId == p.Id
+                            && t.Type.Equals("Despesa", StringComparison.OrdinalIgnoreCase)
                         )
                         .Sum(t => t.Value),
                 })
                 .ToList();
 
-            var totalItems = grouped.Count;
+            var totalItem = grouped.Count;
 
             var paginated = grouped.Skip((page - 1) * pageSize).Take(pageSize).ToList();
-
-            var totalReceitas = grouped.Sum(x => x.TotalReceitas);
-            var totalDespesas = grouped.Sum(x => x.TotalDespesas);
 
             return new PersonBalanceResponseDto
             {
                 Data = paginated,
-                TotalReceitas = totalReceitas,
-                TotalDespesas = totalDespesas,
+                TotalIncome = grouped.Sum(x => x.TotalIncome),
+                TotalExpenses = grouped.Sum(x => x.TotalExpenses),
                 Page = page,
                 PageSize = pageSize,
-                TotalItems = totalItems,
+                TotalItems = totalItem,
             };
         }
 
@@ -122,11 +152,10 @@ namespace webApi.Features.Transactions.Services
             var transactions = await _repository.GetAllAsync();
 
             var grouped = transactions
-                .GroupBy(t => new { t.CategoryId, t.Category.Description })
+                .GroupBy(t => t.Category)
                 .Select(g => new CategoryBalanceDto
                 {
-                    CategoryId = g.Key.CategoryId,
-                    CategoryDescription = g.Key.Description,
+                    CategoryDescription = g.Key,
 
                     TotalReceitas = g.Where(t =>
                             t.Type.Equals("Receita", StringComparison.OrdinalIgnoreCase)
@@ -140,14 +169,11 @@ namespace webApi.Features.Transactions.Services
                 })
                 .ToList();
 
-            var totalReceitas = grouped.Sum(x => x.TotalReceitas);
-            var totalDespesas = grouped.Sum(x => x.TotalDespesas);
-
             return new CategoryBalanceResponseDto
             {
                 Data = grouped,
-                TotalReceitas = totalReceitas,
-                TotalDespesas = totalDespesas,
+                TotalReceitas = grouped.Sum(x => x.TotalReceitas),
+                TotalDespesas = grouped.Sum(x => x.TotalDespesas),
             };
         }
     }

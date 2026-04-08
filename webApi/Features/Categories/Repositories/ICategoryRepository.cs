@@ -6,5 +6,6 @@ namespace webApi.Features.Categories.Repositories
     {
         Task<List<Category>> GetAllCategoryAsync();
         Task<Category> CreateCategoryAsync(Category category);
+        Task<Category?> GetCategoryByIdAsync(int id);
     }
 }

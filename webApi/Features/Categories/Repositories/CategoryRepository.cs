@@ -24,5 +24,10 @@ namespace webApi.Features.Categories.Repositories
             await _context.SaveChangesAsync();
             return category;
         }
+
+        public async Task<Category?> GetCategoryByIdAsync(int id)
+        {
+            return await _context.Categories.FindAsync(id);
+        }
     }
 }

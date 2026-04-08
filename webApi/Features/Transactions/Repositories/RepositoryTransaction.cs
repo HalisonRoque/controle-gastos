@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using webApi.Data;
-using webApi.Features.Transactions.Entities;
+using TransactionEntity = webApi.Features.Transactions.Entities.Transaction;
 
 namespace webApi.Features.Transactions.Repositories
 {
@@ -13,15 +13,12 @@ namespace webApi.Features.Transactions.Repositories
             _context = context;
         }
 
-        public async Task<List<Transaction>> GetAllAsync()
+        public async Task<List<TransactionEntity>> GetAllAsync()
         {
-            return await _context
-                .Transactions.Include(t => t.Person)
-                .Include(t => t.Category)
-                .ToListAsync();
+            return await _context.Transactions.Include(t => t.Person).ToListAsync();
         }
 
-        public async Task<Transaction> CreateAsync(Transaction transaction)
+        public async Task<TransactionEntity> CreateAsync(TransactionEntity transaction)
         {
             _context.Transactions.Add(transaction);
             await _context.SaveChangesAsync();

@@ -3,6 +3,7 @@ import { homeRoutes } from "../home/index";
 import { categoryRoutes } from "../category";
 import { personRoutes } from "../person";
 import { transactionRoutes } from "../transaction";
+import { balanceRoutes } from "../balance";
 // depois você adiciona outras
 
 const AppRoutes = () => {
@@ -11,6 +12,7 @@ const AppRoutes = () => {
         ...categoryRoutes,
         ...personRoutes,
         ...transactionRoutes,
+        ...balanceRoutes,
     ]);
 };
 

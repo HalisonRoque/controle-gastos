@@ -1,7 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import AppCard from "../../../components/AppCard";
 import styles from "./styles.module.css";
-
 import {
     Table,
     TableHead,
@@ -13,27 +12,26 @@ import {
     IconButton,
     CircularProgress,
 } from "@mui/material";
-import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
-import { useSnackbar } from "notistack";
-import type { CreateTransactionDTO, TransactionType } from "../../../types/TransactionType";
-import { createTransaction, getTransaction } from "../../../../services/transaction";
-import CreateTransactionModal from "./CreateTransactionModal";
+import type { TransactionType } from "../../../types/TransactionType";
+import { getTransaction } from "../../../../services/transaction";
 
 export default function TransactionList() {
     const [data, setData] = useState<TransactionType[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [dataError, setDataError] = useState(false);
-    const [reload, setReload] = useState(0);
-    const [openCreate, setOpenCreate] = useState(false);
-    const [loadingCreate, setLoadingCreate] = useState(false);
     const [loadingFilter, setLoadingFilter] = useState(false);
     const [search, setSearch] = useState("");
-    const { enqueueSnackbar } = useSnackbar();
-
     const [filter, setFilter] = useState("");
     const [page, setPage] = useState(0);
     const pageSize = 5;
+
+    const formatCurrency = (value: number) => {
+        return new Intl.NumberFormat("pt-BR", {
+            style: "currency",
+            currency: "BRL",
+        }).format(value);
+    };
 
     useEffect(() => {
         getTransaction(filter)
@@ -45,34 +43,7 @@ export default function TransactionList() {
                 setDataError(true);
                 setDataLoaded(true);
             });
-    }, [reload, filter]);
-
-    const handleCreate = (transaction: CreateTransactionDTO) => {
-        setLoadingCreate(true);
-        createTransaction(transaction)
-            .then(() => {
-                enqueueSnackbar("Transação criada com sucesso!", {
-                    variant: "success",
-                    anchorOrigin: {
-                        horizontal: "right",
-                        vertical: "top",
-                    },
-                });
-
-                setOpenCreate(false);
-                setReload((prev) => prev + 1);
-            })
-            .catch(() => {
-                enqueueSnackbar("Erro ao criar nova transação", {
-                    variant: "error",
-                    anchorOrigin: {
-                        horizontal: "right",
-                        vertical: "top",
-                    },
-                });
-            })
-            .finally(() => setLoadingCreate(false));
-    };
+    }, [filter]);
 
     const handleClearFilter = () => {
         setFilter("");
@@ -139,22 +110,24 @@ export default function TransactionList() {
                             <Table className={styles.table}>
                                 <TableHead>
                                     <TableRow className={styles.tableHeader}>
-                                        <TableCell>nome</TableCell>
-                                        <TableCell>Descrição</TableCell>
+                                        <TableCell>Pessoa</TableCell>
                                         <TableCell>Tipo</TableCell>
-                                        <TableCell>Receita</TableCell>
-                                        <TableCell>Despesas</TableCell>
+                                        <TableCell>Categoria</TableCell>
+                                        <TableCell>Descrição</TableCell>
+                                        <TableCell>Valor</TableCell>
                                     </TableRow>
                                 </TableHead>
 
                                 <TableBody>
                                     {paginatedData.map((row) => (
                                         <TableRow key={row.id}>
-                                            <TableCell>{row.nome}</TableCell>
-                                            <TableCell>{row.description}</TableCell>
+                                            <TableCell>{row.person}</TableCell>
                                             <TableCell>{row.type}</TableCell>
-                                            <TableCell>{row.receita}</TableCell>
-                                            <TableCell>{row.despesa}</TableCell>
+                                            <TableCell>{row.category}</TableCell>
+                                            <TableCell>{row.description}</TableCell>
+                                            <TableCell>
+                                                {formatCurrency(row.value)}
+                                            </TableCell>
                                         </TableRow>
                                     ))}
                                 </TableBody>
@@ -180,28 +153,6 @@ export default function TransactionList() {
                         </>
                     )}
             </AppCard>
-            <div className={styles.footer}>
-                <IconButton
-                    size="small"
-                    className={styles.addButton}
-                    onClick={() => setOpenCreate(true)}
-                    disabled={loadingCreate}
-                >
-                    {loadingCreate ? (
-                        <CircularProgress size={16} />
-                    ) : (
-                        <>
-                            <span className={styles.buttonText}>Novo</span>
-                            <AddIcon />
-                        </>
-                    )}
-                </IconButton>
-            </div>
-            <CreateTransactionModal
-                open={openCreate}
-                onClose={() => setOpenCreate(false)}
-                onSave={handleCreate}
-            />
         </div>
     );
 }

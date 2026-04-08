@@ -13,6 +13,7 @@ import {
     IconButton,
     CircularProgress,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from '@mui/icons-material/Add';
@@ -22,6 +23,10 @@ import CreatePersonModal from "./CreatePersonModal";
 import PersonEditModal from "./EditPersonModal";
 import DeletePersonModal from "./DeletePersonModal";
 import { createPerson, deletePerson, getPersons, updatePerson } from "../../../../services/person";
+import CreateTransactionModal from "./CreateTransactionModal";
+import type { CreateTransactionDTO } from "../../../types/TransactionType";
+import { createTransaction } from "../../../../services/transaction";
+import RepeatOnIcon from '@mui/icons-material/RepeatOn';
 
 export default function PersonList() {
     const [data, setData] = useState<PersonType[]>([]);
@@ -32,17 +37,22 @@ export default function PersonList() {
     const [selectedPerson, setSelectedPerson] = useState<PersonType | null>(null);
     const [openCreate, setOpenCreate] = useState(false);
     const [openDelete, setOpenDelete] = useState(false);
+    const [openCreateTransaction, setOpenCreateTransaction] = useState(false);
     const [selectedPersonDelete, setSelectedPersonDelete] = useState<PersonType | null>(null);
+    const [selectedPersonTransaction, setSelectedPersonTransaction] = useState<PersonType | null>(null);
     const [filter, setFilter] = useState("");
     const [loadingCreate, setLoadingCreate] = useState(false);
     const [loadingUpdate, setLoadingUpdate] = useState(false);
     const [loadingDelete, setLoadingDelete] = useState(false);
     const [loadingFilter, setLoadingFilter] = useState(false);
+    const [loadingCreateTransaction, setLoadingCreateTransaction] = useState(false);
     const [deletingId, setDeletingId] = useState<number | null>(null);
     const [updatingId, setUpdatingId] = useState<number | null>(null);
+    const [personId, setPersonId] = useState<number | null>(null);
     const [page, setPage] = useState(0);
     const [reload, setReload] = useState(0);
     const [search, setSearch] = useState("");
+    const navigate = useNavigate();
     const pageSize = 5;
 
     useEffect(() => {
@@ -148,6 +158,38 @@ export default function PersonList() {
             });
     };
 
+    const handleCreateTransaction = (transaction: CreateTransactionDTO, id: number) => {
+        setLoadingCreateTransaction(true);
+        setPersonId(id)
+        createTransaction(transaction)
+            .then(() => {
+                enqueueSnackbar("Transação criada com sucesso!", {
+                    variant: "success",
+                    anchorOrigin: {
+                        horizontal: "right",
+                        vertical: "top",
+                    },
+                });
+
+                setOpenCreateTransaction(false);
+                setReload((prev) => prev + 1);
+                navigate("/transações");
+            })
+            .catch(() => {
+                enqueueSnackbar("Erro ao criar nova transação", {
+                    variant: "error",
+                    anchorOrigin: {
+                        horizontal: "right",
+                        vertical: "top",
+                    },
+                });
+            })
+            .finally(() => {
+                setLoadingCreateTransaction(false)
+                setPersonId(null)
+            });
+    };
+
     const handleClearFilter = () => {
         setFilter("");
         setSearch("");
@@ -247,6 +289,25 @@ export default function PersonList() {
 
                                                     <IconButton
                                                         size="small"
+                                                        className={styles.addButton}
+                                                        disabled={loadingCreateTransaction && personId === person.id}
+                                                        onClick={() => {
+                                                            setSelectedPersonTransaction(person);
+                                                            setOpenCreateTransaction(true);
+                                                        }}
+                                                    >
+                                                        {loadingCreateTransaction && personId === person.id ? (
+                                                            <CircularProgress size={16} />
+                                                        ) : (
+                                                            <>
+                                                                <span className={styles.buttonText}>Transação</span>
+                                                                <RepeatOnIcon />
+                                                            </>
+                                                        )}
+                                                    </IconButton>
+
+                                                    <IconButton
+                                                        size="small"
                                                         className={styles.deleteButton}
                                                         disabled={loadingDelete && deletingId === person.id}
                                                         onClick={() => {
@@ -327,6 +388,17 @@ export default function PersonList() {
                     if (selectedPersonDelete?.id) {
                         handleDelete(selectedPersonDelete.id);
                     }
+                }}
+            />
+            <CreateTransactionModal
+                key={selectedPersonTransaction?.id}
+                open={openCreateTransaction}
+                onClose={() => setOpenCreateTransaction(false)}
+                personId={selectedPersonTransaction?.id || 0}
+                age={selectedPersonTransaction?.age || 0}
+                onSave={(transaction) => {
+                    if (selectedPersonTransaction?.id)
+                        handleCreateTransaction(transaction, selectedPersonTransaction.id);
                 }}
             />
         </div>

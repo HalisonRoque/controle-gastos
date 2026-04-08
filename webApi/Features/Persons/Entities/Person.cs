@@ -1,5 +1,5 @@
 using System.ComponentModel.DataAnnotations;
-using webApi.Features.Transactions.Entities;
+using TransactionEntity = webApi.Features.Transactions.Entities.Transaction;
 
 namespace webApi.Features.Persons.Entities
 {
@@ -8,11 +8,12 @@ namespace webApi.Features.Persons.Entities
         public int Id { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
 
         [Required]
         public int Age { get; set; }
 
-        public List<Transaction> Transactions { get; set; } = new();
+        public List<TransactionEntity> Transactions { get; set; } = new();
     }
 }

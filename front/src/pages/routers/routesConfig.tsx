@@ -53,6 +53,14 @@ const routesConfig: RouterConfigData[] = [
                 icon: <RepeatOnIcon />,
                 url: "/transações",
             },
+            {
+                id: "balance",
+                title: "Total Contas",
+                message: "Total Contas",
+                type: "item",
+                icon: <RepeatOnIcon />,
+                url: "/total/contas",
+            },
         ],
     },
 ];
