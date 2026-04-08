@@ -15,3 +15,9 @@ export const createTransaction = async (
     const { data } = await api.post("/api/transaction/create", transaction);
     return data;
 };
+
+export const getPersonBalance = async (
+) => {
+    const { data } = await api.get("/api/transaction/balance", {});
+    return data;
+};

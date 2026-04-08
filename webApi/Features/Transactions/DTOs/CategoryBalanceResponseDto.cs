@@ -4,8 +4,10 @@ namespace webApi.Features.Transactions.DTOs
     {
         public List<CategoryBalanceDto> Data { get; set; } = new();
 
-        public decimal TotalReceitas { get; set; }
-        public decimal TotalDespesas { get; set; }
-        public decimal SaldoLiquido => TotalReceitas - TotalDespesas;
+        public decimal TotalIncome { get; set; }
+
+        public decimal TotalExpenses { get; set; }
+
+        public decimal Balance { get; set; }
     }
 }

@@ -13,7 +13,7 @@ import {
 import { getPersonBalance } from "../../../../services/transaction";
 import type { PersonBalanceType } from "../../../types/TransactionType";
 
-export default function PersonBalanceList() {
+export default function CategoryBalanceList() {
     const [data, setData] = useState<PersonBalanceType[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false);
     const [dataError, setDataError] = useState(false);

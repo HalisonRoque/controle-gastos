@@ -5,9 +5,10 @@ namespace webApi.Features.Transactions.DTOs
         public int CategoryId { get; set; }
         public string CategoryDescription { get; set; } = string.Empty;
 
-        public decimal TotalReceitas { get; set; }
-        public decimal TotalDespesas { get; set; }
+        public decimal TotalIncome { get; set; }
 
-        public decimal Saldo => TotalReceitas - TotalDespesas;
+        public decimal TotalExpenses { get; set; }
+
+        public decimal BalanceItem => TotalIncome - TotalExpenses;
     }
 }

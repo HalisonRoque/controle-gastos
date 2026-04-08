@@ -10,6 +10,6 @@ namespace webApi.Features.Transactions.DTOs
 
         public decimal TotalExpenses { get; set; }
 
-        public decimal Saldo => TotalIncome - TotalExpenses;
+        public decimal Balance => TotalIncome - TotalExpenses;
     }
 }

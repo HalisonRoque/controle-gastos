@@ -12,8 +12,8 @@ namespace webApi.Features.Transactions.DTOs
 
         public int PageSize { get; set; }
 
-        public int TotalItem { get; set; }
+        public decimal TotalItem { get; set; }
 
-        public decimal Balance => TotalIncome - TotalExpenses;
+        public decimal Balance { get; set; }
     }
 }

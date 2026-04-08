@@ -29,13 +29,9 @@ namespace webApi.Features.Transactions.Controllers
         }
 
         [HttpGet("balance")]
-        public async Task<IActionResult> GetBalance(
-            [FromQuery] int? personId,
-            [FromQuery] int page = 1,
-            [FromQuery] int pageSize = 10
-        )
+        public async Task<IActionResult> GetBalance()
         {
-            var result = await _service.GetBalanceAsync(personId, page, pageSize);
+            var result = await _service.GetBalanceAsync();
             return Ok(result);
         }
 

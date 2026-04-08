@@ -3,6 +3,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import PeopleIcon from '@mui/icons-material/People';
 import HomeIcon from '@mui/icons-material/Home';
 import RepeatOnIcon from '@mui/icons-material/RepeatOn';
+import PointOfSaleIcon from '@mui/icons-material/PointOfSale';
 
 export interface RouterConfigData {
     id: string;
@@ -58,7 +59,7 @@ const routesConfig: RouterConfigData[] = [
                 title: "Total Contas",
                 message: "Total Contas",
                 type: "item",
-                icon: <RepeatOnIcon />,
+                icon: <PointOfSaleIcon />,
                 url: "/total/contas",
             },
         ],

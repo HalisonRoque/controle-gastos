@@ -95,20 +95,10 @@ namespace webApi.Features.Transactions.Services
             };
         }
 
-        public async Task<PersonBalanceResponseDto> GetBalanceAsync(
-            int? personId,
-            int page,
-            int pageSize
-        )
+        public async Task<PersonBalanceResponseDto> GetBalanceAsync()
         {
-            page = page < 1 ? 1 : page;
-            pageSize = pageSize < 1 ? 10 : pageSize;
-
             var persons = await _personRepository.GetAllAsync();
             var transactions = await _repository.GetAllAsync();
-
-            if (personId.HasValue)
-                persons = persons.Where(p => p.Id == personId.Value).ToList();
 
             var grouped = persons
                 .Select(p => new PersonBalanceDto
@@ -130,50 +120,59 @@ namespace webApi.Features.Transactions.Services
                         )
                         .Sum(t => t.Value),
                 })
+                .OrderByDescending(x => x.TotalIncome + x.TotalExpenses)
                 .ToList();
 
-            var totalItem = grouped.Count;
-
-            var paginated = grouped.Skip((page - 1) * pageSize).Take(pageSize).ToList();
+            var totalIncome = grouped.Sum(x => x.TotalIncome);
+            var totalExpenses = grouped.Sum(x => x.TotalExpenses);
 
             return new PersonBalanceResponseDto
             {
-                Data = paginated,
-                TotalIncome = grouped.Sum(x => x.TotalIncome),
-                TotalExpenses = grouped.Sum(x => x.TotalExpenses),
-                Page = page,
-                PageSize = pageSize,
-                TotalItems = totalItem,
+                Data = grouped,
+                TotalIncome = totalIncome,
+                TotalExpenses = totalExpenses,
+                Balance = totalIncome - totalExpenses,
+                TotalItem = grouped.Count,
             };
         }
 
         public async Task<CategoryBalanceResponseDto> GetCategoryBalanceAsync()
         {
+            var categories = await _categoryRepository.GetAllCategoryAsync();
             var transactions = await _repository.GetAllAsync();
 
-            var grouped = transactions
-                .GroupBy(t => t.Category)
-                .Select(g => new CategoryBalanceDto
+            var grouped = categories
+                .Select(c => new CategoryBalanceDto
                 {
-                    CategoryDescription = g.Key,
+                    CategoryId = c.Id,
+                    CategoryDescription = c.Description,
 
-                    TotalReceitas = g.Where(t =>
-                            t.Type.Equals("Receita", StringComparison.OrdinalIgnoreCase)
+                    TotalIncome = transactions
+                        .Where(t =>
+                            t.Category == c.Description
+                            && t.Type.Equals("Receita", StringComparison.OrdinalIgnoreCase)
                         )
                         .Sum(t => t.Value),
 
-                    TotalDespesas = g.Where(t =>
-                            t.Type.Equals("Despesa", StringComparison.OrdinalIgnoreCase)
+                    TotalExpenses = transactions
+                        .Where(t =>
+                            t.Category == c.Description
+                            && t.Type.Equals("Despesa", StringComparison.OrdinalIgnoreCase)
                         )
                         .Sum(t => t.Value),
                 })
+                .OrderByDescending(x => x.TotalIncome + x.TotalExpenses)
                 .ToList();
+
+            var totalIncome = grouped.Sum(x => x.TotalIncome);
+            var totalExpenses = grouped.Sum(x => x.TotalExpenses);
 
             return new CategoryBalanceResponseDto
             {
                 Data = grouped,
-                TotalReceitas = grouped.Sum(x => x.TotalReceitas),
-                TotalDespesas = grouped.Sum(x => x.TotalDespesas),
+                TotalIncome = totalIncome,
+                TotalExpenses = totalExpenses,
+                Balance = totalIncome - totalExpenses,
             };
         }
     }

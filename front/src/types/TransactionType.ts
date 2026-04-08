@@ -16,3 +16,12 @@ export type CreateTransactionDTO = {
     personId: number;
     categoryId: number;
 }
+
+export type PersonBalanceType = {
+    personId: number;
+    personName: string;
+    totalIncome: number;
+    totalExpenses: number;
+    totalItem: number;
+    balance: number;
+};

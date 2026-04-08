@@ -5,16 +5,10 @@ import {
     DialogActions,
     Button,
     TextField,
-    FormControl,
-    MenuItem,
-    Select,
-    InputLabel,
-    FormHelperText,
 } from "@mui/material";
 import { useState } from "react";
 import type { CreateCategoryDTO } from "../../../types/CategoryType";
 import styles from "./styles.module.css";
-import { PURPOSE_OPTIONS } from "../../../constants/purpose";
 
 type CategoryModalProps = {
     open: boolean;
@@ -86,32 +80,17 @@ export default function CreateCategoryModal({
             </DialogTitle>
 
             <DialogContent className={styles.modalContent}>
-                <FormControl fullWidth margin="normal" error={!!errors.purpose}>
-                    <InputLabel id="purpose-label">Finalidade</InputLabel>
-
-                    <Select
-                        labelId="purpose-label"
-                        value={form.purpose}
-                        label="Finalidade"
-                        onChange={(e) => {
-                            handleChange("purpose", e.target.value);
-                            setErrors((prev) => ({ ...prev, purpose: "" }));
-                        }}
-                    >
-                        <MenuItem value="">
-                            <em>Selecione...</em>
-                        </MenuItem>
-
-                        {PURPOSE_OPTIONS.map((option) => (
-                            <MenuItem key={option} value={option}>
-                                {option}
-                            </MenuItem>
-                        ))}
-                    </Select>
-                    {errors.purpose &&
-                        <FormHelperText>{errors.purpose}</FormHelperText>
-                    }
-                </FormControl>
+                <TextField
+                    label="Finalidade"
+                    fullWidth
+                    margin="normal"
+                    value={form.purpose}
+                    error={!!errors.purpose}
+                    helperText={errors.purpose}
+                    onChange={(e) => {
+                        handleChange("purpose", e.target.value);
+                    }}
+                />
 
                 <TextField
                     label="Descrição"

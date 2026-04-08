@@ -1,0 +1,66 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 1.6rem;
+}
+
+.filterContainer {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  gap: 1.0rem;
+}
+
+.table {
+  width: 100%;
+  table-layout: fixed;
+}
+
+.tableHeader th {
+  text-align: center;
+  color: var(--text-default);
+  font-weight: bold;
+  font-size: 1.4rem;
+}
+
+.table th,
+.table td {
+  text-align: center;
+  vertical-align: middle;
+  font-size: 1.4rem;
+}
+
+.table th:nth-child(1),
+.table td:nth-child(1) {
+  width: 20%;
+}
+
+.table th:nth-child(2),
+.table td:nth-child(2) {
+  width: 20%;
+}
+
+.table th:nth-child(3),
+.table td:nth-child(3) {
+  width: 20%;
+}
+
+.actions {
+  display: flex;
+  gap: 0.8rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  justify-content: end;
+  align-items: center;
+  padding: 1.2rem;
+}
+
+@media (max-width: 768px) {
+  .buttonText {
+    display: none;
+  }
+}
