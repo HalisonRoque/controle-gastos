@@ -152,15 +152,6 @@ export default function CreateTransactionModal({
             </DialogTitle>
 
             <DialogContent className={styles.modalContent}>
-                <TextField
-                    fullWidth
-                    margin="normal"
-                    label="Descrição"
-                    value={form.description}
-                    onChange={(e) =>
-                        handleChange("description", e.target.value)
-                    }
-                />
                 <FormControl fullWidth margin="normal" error={!!errors.type}>
                     <InputLabel id="type-label">Tipo</InputLabel>
 
@@ -237,6 +228,15 @@ export default function CreateTransactionModal({
                     helperText={errors.value}
                 />
 
+                <TextField
+                    fullWidth
+                    margin="normal"
+                    label="Descrição"
+                    value={form.description}
+                    onChange={(e) =>
+                        handleChange("description", e.target.value)
+                    }
+                />
             </DialogContent>
 
             <DialogActions className={styles.modalActions}>
