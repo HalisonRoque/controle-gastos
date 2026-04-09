@@ -10,8 +10,8 @@ using webApi.Data;
 namespace webApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260403162521_AddCategoryAndTransaction")]
-    partial class AddCategoryAndTransaction
+    [Migration("20260409042557_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,83 +19,93 @@ namespace webApi.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.0");
 
-            modelBuilder.Entity("webApi.Features.Categories.Entity.Category", b =>
+            modelBuilder.Entity("webApi.Features.Categories.Entities.Category", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("description")
+                    b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(400)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("purpose")
+                    b.Property<string>("Purpose")
                         .IsRequired()
+                        .HasMaxLength(128)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Categories");
                 });
 
-            modelBuilder.Entity("webApi.Features.Persons.Entity.Person", b =>
+            modelBuilder.Entity("webApi.Features.Persons.Entities.Person", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("age")
+                    b.Property<int>("Age")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("name")
+                    b.Property<string>("Name")
                         .IsRequired()
+                        .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.ToTable("Persons");
                 });
 
-            modelBuilder.Entity("webApi.Features.Transactions.Entity.Transaction", b =>
+            modelBuilder.Entity("webApi.Features.Transactions.Entities.Transaction", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("category")
+                    b.Property<string>("Category")
                         .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("description")
+                    b.Property<string>("Description")
                         .IsRequired()
+                        .HasMaxLength(400)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("id_person")
+                    b.Property<int>("PersonId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("personid")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("type")
+                    b.Property<string>("Type")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("id");
+                    b.Property<decimal>("Value")
+                        .HasColumnType("TEXT");
 
-                    b.HasIndex("personid");
+                    b.HasKey("Id");
+
+                    b.HasIndex("PersonId");
 
                     b.ToTable("Transactions");
                 });
 
-            modelBuilder.Entity("webApi.Features.Transactions.Entity.Transaction", b =>
+            modelBuilder.Entity("webApi.Features.Transactions.Entities.Transaction", b =>
                 {
-                    b.HasOne("webApi.Features.Persons.Entity.Person", "person")
-                        .WithMany()
-                        .HasForeignKey("personid")
+                    b.HasOne("webApi.Features.Persons.Entities.Person", "Person")
+                        .WithMany("Transactions")
+                        .HasForeignKey("PersonId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("person");
+                    b.Navigation("Person");
+                });
+
+            modelBuilder.Entity("webApi.Features.Persons.Entities.Person", b =>
+                {
+                    b.Navigation("Transactions");
                 });
 #pragma warning restore 612, 618
         }
