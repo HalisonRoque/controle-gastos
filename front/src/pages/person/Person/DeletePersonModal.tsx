@@ -8,6 +8,9 @@ import {
 } from "@mui/material";
 import styles from "./styles.module.css";
 
+/*Criação de Modal para deletar uma pessoa 
+onde envia ao banco de dados para poder deletar o registro*/
+
 type DeletePersonModalProps = {
     open: boolean;
     onClose: () => void;

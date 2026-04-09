@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using webApi.Features.Persons.DTOs;
 using webApi.Features.Persons.Services;
 
+/*Controller de pessoas usado para criação de endpoint pra por meio de metodos http fazer a comunição com o frontend*/
 namespace webApi.Features.Persons.Controllers
 {
     [ApiController]
@@ -15,20 +16,21 @@ namespace webApi.Features.Persons.Controllers
             _service = service;
         }
 
+        // GET: /api/person/all
         [HttpGet("all")]
         public async Task<IActionResult> GetAll([FromQuery] string? name)
         {
             return Ok(await _service.GetAllAsync(name));
         }
 
-        // GET: api/person/1
+        // GET: /api/person/id
         [HttpGet("{id}")]
         public async Task<IActionResult> GetById(int id)
         {
             return Ok(await _service.GetByIdAsync(id));
         }
 
-        // POST: api/person
+        // POST: api/person/create
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreatePersonDto dto)
         {
@@ -36,7 +38,7 @@ namespace webApi.Features.Persons.Controllers
             return CreatedAtAction(nameof(GetById), new { id = result.Id }, result);
         }
 
-        // PUT: api/person/1
+        // PUT: api/person/id
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] UpdatePersonDto dto)
         {
@@ -44,7 +46,7 @@ namespace webApi.Features.Persons.Controllers
             return NoContent();
         }
 
-        // DELETE: api/person/1
+        // DELETE: api/person/id
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

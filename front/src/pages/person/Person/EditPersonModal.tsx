@@ -10,6 +10,10 @@ import { useState } from "react";
 import type { PersonType } from "../../../types/PersonType";
 import styles from "./styles.module.css";
 
+/*Criação de Modal para editar pessoa
+onde envia ao banco de dados para poder salvar uma nova pessoa */
+
+
 type PersonEditModalProps = {
     open: boolean;
     onClose: () => void;

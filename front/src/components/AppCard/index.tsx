@@ -7,6 +7,8 @@ import {
 import type { ReactNode } from "react";
 import styles from "./styles.module.css";
 
+/*Componente AppCard padrão usado em vários lugares do código */
+
 type AppCardProps = {
   title?: string;
   action?: ReactNode;

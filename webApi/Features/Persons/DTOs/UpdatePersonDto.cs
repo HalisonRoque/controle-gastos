@@ -1,3 +1,4 @@
+/*DTO destinado para update de pessoas*/
 namespace webApi.Features.Persons.DTOs
 {
     public class UpdatePersonDto

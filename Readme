@@ -1,6 +1,6 @@
-# 📊 Sistema de Controle de Gastos Residenciais
+# Sistema de Controle de Gastos Residenciais
 
-## 🧱 Arquitetura
+## Arquitetura
 
 O projeto foi desenvolvido utilizando **arquitetura em camadas com organização por feature (Feature Folder)**, visando alta coesão, baixo acoplamento e facilidade de manutenção.
 
@@ -11,12 +11,13 @@ A estrutura do back-end foi organizada por domínio (ex: Persons, Categories, Tr
 * Repositories
 * DTOs
 * Entities
+* Error
 
 Essa abordagem facilita a escalabilidade do sistema e evita a dispersão de responsabilidades entre múltiplas pastas globais.
 
 ---
 
-## ⚙️ Tecnologias Utilizadas
+## Tecnologias Utilizadas
 
 ### Back-end
 
@@ -30,12 +31,13 @@ Essa abordagem facilita a escalabilidade do sistema e evita a dispersão de resp
 * React
 * TypeScript
 * Vite
+* Material UI
 
 ---
 
-## 🗂️ Padrões e Boas Práticas
+## Padrões e Boas Práticas
 
-### 🔹 Separação de responsabilidades (SRP)
+### Separação de responsabilidades (SRP)
 
 A aplicação segue o princípio de responsabilidade única, dividindo as camadas em:
 
@@ -45,7 +47,7 @@ A aplicação segue o princípio de responsabilidade única, dividindo as camada
 
 ---
 
-### 🔹 Uso de DTOs (Data Transfer Objects)
+### Uso de DTOs (Data Transfer Objects)
 
 Foram utilizados DTOs para:
 
@@ -56,7 +58,7 @@ Isso garante desacoplamento entre a camada de domínio e a camada de apresentaç
 
 ---
 
-### 🔹 Padrão Repository
+### Padrão Repository
 
 A camada de repositório abstrai o acesso ao banco de dados utilizando o Entity Framework, permitindo:
 
@@ -66,13 +68,13 @@ A camada de repositório abstrai o acesso ao banco de dados utilizando o Entity 
 
 ---
 
-### 🔹 Injeção de Dependência
+### Injeção de Dependência
 
 Foi utilizado o sistema nativo de **Dependency Injection do .NET**, registrando services e repositories no `Program.cs`.
 
 ---
 
-### 🔹 Persistência de Dados
+### Persistência de Dados
 
 Foi utilizado **SQLite**, um banco de dados leve e embarcado, garantindo:
 
@@ -81,7 +83,7 @@ Foi utilizado **SQLite**, um banco de dados leve e embarcado, garantindo:
 
 ---
 
-### 🔹 Organização por Feature (Feature Folder)
+### Organização por Feature (Feature Folder)
 
 O projeto adota o padrão Feature Folder, onde cada domínio possui sua própria estrutura interna:
 
@@ -93,11 +95,61 @@ Features/
 ├── Entities/
 ├── Repositories/
 ├── Services/
-└── PersonController.cs
+|__ Error/
+└── Controllers/
 
 ---
 
-## 🚀 Objetivo
+### Padrão Frontend
+
+O front-end deste projeto foi desenvolvido em React e segue uma arquitetura baseada em rotas utilizando AppRoutes.
+
+---
+
+### Principais Tecnologias
+
+React – Biblioteca principal para construção da interface.
+Material UI – Biblioteca de componentes prontos para estilização moderna e responsiva.
+CSS Modules – Arquivos styles.module.css são utilizados para aplicar estilos de forma local, evitando conflitos globais de CSS.
+React Router (AppRoutes) – Gerenciamento das rotas da aplicação, permitindo navegação entre páginas de forma organizada.
+
+---
+
+### Estrutura do Projeto
+
+components/ – Componentes reutilizáveis da aplicação, como AppCard, tabelas e botões.
+pages/ – Páginas principais, conectadas às rotas do AppRoutes.
+services/ – Funções para consumo da API back-end.
+types/ – Tipagens TypeScript utilizadas para consistência entre front-end e back-end.
+styles/ – Arquivos de estilo local utilizando CSS Modules.
+
+---
+
+### Estilização
+
+Cada componente utiliza seu próprio arquivo styles.module.css, garantindo que os estilos sejam encapsulados e não afetem outros componentes.
+
+---
+
+### Integração com Material UI
+
+O Material UI é utilizado para componentes como:
+
+Card, CardHeader, CardContent
+Table, TableHead, TableRow, TableCell
+Button e outros elementos de interface
+
+Isso permite uma interface consistente, responsiva e moderna.
+
+---
+
+### Rotas
+
+O arquivo AppRoutes.tsx gerencia todas as rotas da aplicação, garantindo que cada página seja carregada corretamente de acordo com o caminho definido.
+
+---
+
+## Objetivo
 
 O sistema tem como objetivo permitir o controle de gastos residenciais, possibilitando:
 
@@ -107,6 +159,6 @@ O sistema tem como objetivo permitir o controle de gastos residenciais, possibil
 
 ---
 
-## 📌 Considerações
+## Considerações
 
 O projeto foi estruturado com foco em boas práticas de desenvolvimento, legibilidade de código e facilidade de manutenção, atendendo aos critérios de avaliação propostos.

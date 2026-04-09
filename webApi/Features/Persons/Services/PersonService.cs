@@ -15,6 +15,9 @@ namespace webApi.Features.Persons.Services
             _repository = repository;
         }
 
+        /*Função para listagem de todas as pessoas cadastradas.
+        Podendo receber um filtro para finalidade
+        */
         public async Task<List<ResponsePersonDto>> GetAllAsync(string? name)
         {
             var persons = await _repository.GetAllAsync();
@@ -33,6 +36,7 @@ namespace webApi.Features.Persons.Services
                 .ToList();
         }
 
+        /*Função para busca de pessoas por seu id, onde retorna apenas o registro do id informado*/
         public async Task<ResponsePersonDto> GetByIdAsync(int id)
         {
             var person = await _repository.GetByIdAsync(id);
@@ -48,12 +52,11 @@ namespace webApi.Features.Persons.Services
             };
         }
 
+        /*Função para criação de pessoas recebendo dados em um payload de CreatePersonDto
+         onde faz a tipagem de saida de dados atrávez do DTO ResponsePersonDto
+        */
         public async Task<ResponsePersonDto> CreateAsync(CreatePersonDto dto)
         {
-            // Regra simples de validação
-            if (dto.Age <= 0)
-                throw new Exception("Age must be greater than zero");
-
             var person = new Person { Name = dto.Name, Age = dto.Age };
 
             var created = await _repository.CreateAsync(person);
@@ -66,6 +69,7 @@ namespace webApi.Features.Persons.Services
             };
         }
 
+        /*Função para atualização de pessoa por seu id, onde retorna apenas o registro do id informado*/
         public async Task UpdateAsync(int id, UpdatePersonDto dto)
         {
             var person = await _repository.GetByIdAsync(id);
@@ -79,6 +83,7 @@ namespace webApi.Features.Persons.Services
             await _repository.UpdateAsync(person);
         }
 
+        /*Função para deletar pessoar por seu id onde deleta o seu registro na base de dados*/
         public async Task DeleteAsync(int id)
         {
             var person = await _repository.GetByIdAsync(id);

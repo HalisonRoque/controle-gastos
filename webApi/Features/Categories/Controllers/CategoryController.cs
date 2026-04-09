@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using webApi.Features.Categories.DTOs;
 using webApi.Features.Categories.Services;
 
+/*Controller de categorias usado para criação de endpoint pra por meio de metodos http fazer a comunição com o frontend*/
 namespace webApi.Features.Categories.Controllers
 {
     [ApiController]
@@ -15,14 +16,14 @@ namespace webApi.Features.Categories.Controllers
             _service = service;
         }
 
-        // GET: /api/category
+        // GET: /api/category/all
         [HttpGet("all")]
         public async Task<IActionResult> GetAll([FromQuery] string? purpose)
         {
             return Ok(await _service.GetAllCategoryAsync(purpose));
         }
 
-        // POST: api/category
+        // POST: api/category/create
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateCategoryDto category)
         {

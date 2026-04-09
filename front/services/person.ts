@@ -1,6 +1,8 @@
 import api from "./api";
 import type { PersonType } from "../src/types/PersonType";
 
+/*Métodos criados para acessar os endpois dos controllers importando api do axios*/
+
 // Listar todos
 export const getPersons = async (name?: string): Promise<PersonType[]> => {
     const { data } = await api.get("/api/person/all", {

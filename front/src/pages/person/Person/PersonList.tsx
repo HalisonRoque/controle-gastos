@@ -28,6 +28,17 @@ import type { CreateTransactionDTO } from "../../../types/TransactionType";
 import { createTransaction } from "../../../../services/transaction";
 import RepeatOnIcon from '@mui/icons-material/RepeatOn';
 
+/*Componente para Listar pessoas e criar novos registros, podendo criar, editar, deletar e criar uma nova transferência
+recebe os dados da API e lista por meio de funções mostrando os usuários.
+È chamado modal para criação de pessoas.
+Modal para edição de pessoas.
+Modal para deletar pessoas.
+Modal para criar nova transação por pessoa.
+aLém de botão de filtragem
+Recebe o styles padrão criação para uso do CSS na telas do componente. 
+Aplica paginação de 5 linhas para pular a próxima listagem
+*/
+
 export default function PersonList() {
     const [data, setData] = useState<PersonType[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false);

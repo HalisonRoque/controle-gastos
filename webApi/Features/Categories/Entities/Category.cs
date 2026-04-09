@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using webApi.Features.Transactions.Entities;
 
+/*Entidade que representa a tabela no banco de dados*/
 namespace webApi.Features.Categories.Entities
 {
     public class Category

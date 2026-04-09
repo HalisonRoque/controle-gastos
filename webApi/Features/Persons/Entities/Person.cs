@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using TransactionEntity = webApi.Features.Transactions.Entities.Transaction;
 
+/*Entidade que representa a tabela no banco de dados*/
 namespace webApi.Features.Persons.Entities
 {
     public class Person

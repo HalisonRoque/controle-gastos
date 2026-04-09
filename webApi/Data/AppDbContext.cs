@@ -3,6 +3,7 @@ using webApi.Features.Categories.Entities;
 using webApi.Features.Persons.Entities;
 using webApi.Features.Transactions.Entities;
 
+/*Comunição com o banco de dados*/
 namespace webApi.Data
 {
     public class AppDbContext : DbContext

@@ -1,3 +1,4 @@
+/*DTO destinado para retorno de pessoas*/
 namespace webApi.Features.Persons.DTOs
 {
     public class ResponsePersonDto

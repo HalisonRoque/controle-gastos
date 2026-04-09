@@ -13,6 +13,11 @@ import {
 import { getCategoryBalance } from "../../../../services/transaction";
 import type { CategoryBalanceType } from "../../../types/TransactionType";
 
+/*Componente para Listar total por categoria
+recebe os dados da API e lista por meio de funções mostrando o total de Receitas e Despesas por categoria.
+Recebe o styles padrão criação para uso do CSS na telas do componente. aplica paginação de 5 linhas para pular a próxima listagem
+*/
+
 export default function CategoryBalanceList() {
     const [data, setData] = useState<CategoryBalanceType[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false);

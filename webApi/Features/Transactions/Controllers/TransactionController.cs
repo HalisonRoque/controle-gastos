@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using webApi.Features.Transactions.DTOs;
 using webApi.Features.Transactions.Services;
 
+/*Controller de Transações usado para criação de endpoint pra por meio de metodos http fazer a comunição com o frontend*/
 namespace webApi.Features.Transactions.Controllers
 {
     [ApiController]
@@ -15,12 +16,14 @@ namespace webApi.Features.Transactions.Controllers
             _service = service;
         }
 
+        // GET: /api/transaction/all
         [HttpGet("all")]
         public async Task<IActionResult> GetAll([FromQuery] string? person)
         {
             return Ok(await _service.GetAllAsync(person));
         }
 
+        // POST: /api/transaction/create
         [HttpPost("create")]
         public async Task<IActionResult> Create([FromBody] CreateTransactionDto dto)
         {
@@ -28,6 +31,7 @@ namespace webApi.Features.Transactions.Controllers
             return Ok(result);
         }
 
+        // GET: /api/transaction/balance
         [HttpGet("balance")]
         public async Task<IActionResult> GetBalance()
         {
@@ -35,6 +39,7 @@ namespace webApi.Features.Transactions.Controllers
             return Ok(result);
         }
 
+        // GET: /api/transaction/balance/category
         [HttpGet("balance/category")]
         public async Task<IActionResult> GetCategoryBalance()
         {

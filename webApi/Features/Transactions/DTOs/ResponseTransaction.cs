@@ -1,3 +1,4 @@
+/*DTO destinado para retorno de transações*/
 namespace webApi.Features.Transactions.DTOs
 {
     public class ResponseTransactionDto

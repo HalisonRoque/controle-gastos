@@ -1,3 +1,4 @@
+/*DTO destinado para criação de pessoas*/
 namespace webApi.Features.Persons.DTOs
 {
     public class CreatePersonDto

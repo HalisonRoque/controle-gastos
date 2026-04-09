@@ -1,3 +1,4 @@
+/*DTO destinado para retorno de categorias*/
 namespace webApi.Features.Categories.DTOs
 {
     public class ResponseCategoryDto

@@ -10,6 +10,8 @@ import { useState } from "react";
 import type { CreateCategoryDTO } from "../../../types/CategoryType";
 import styles from "./styles.module.css";
 
+/*Criação de Modal para criação de categorias onde envia ao banco de dados para poder salvar uma nova categoria */
+
 type CategoryModalProps = {
     open: boolean;
     onClose: () => void;

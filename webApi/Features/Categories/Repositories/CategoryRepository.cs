@@ -4,6 +4,7 @@ using webApi.Features.Categories.Entities;
 
 namespace webApi.Features.Categories.Repositories
 {
+    /*Criação de Repositories para acessar o banco de dados buscando e crinado registros*/
     public class CategoryRepository : ICategoryRepository
     {
         private readonly AppDbContext _context;

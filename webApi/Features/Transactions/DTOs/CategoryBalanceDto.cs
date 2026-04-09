@@ -1,3 +1,4 @@
+/*DTO destinado para busca de categorias*/
 namespace webApi.Features.Transactions.DTOs
 {
     public class CategoryBalanceDto

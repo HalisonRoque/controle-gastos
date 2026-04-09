@@ -16,6 +16,16 @@ export interface RouterConfigData {
     url?: string;
 }
 
+/*Criação de RouterConfig para listar menu lateral
+onde navegará entre as telas 
+Home,
+Categorias,
+Pessoas,
+Transações,
+Total Pessoas,
+Total Categorias
+*/
+
 const routesConfig: RouterConfigData[] = [
     {
         id: "app",

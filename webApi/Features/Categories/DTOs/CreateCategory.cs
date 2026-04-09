@@ -1,3 +1,4 @@
+/*DTO destinado para criação de categorias*/
 namespace webApi.Features.Categories.DTOs
 {
     public class CreateCategoryDto

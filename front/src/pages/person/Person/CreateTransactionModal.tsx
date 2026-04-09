@@ -19,6 +19,9 @@ import type { CategoryType } from "../../../types/CategoryType";
 import { getCategory } from "../../../../services/category";
 import styles from "./styles.module.css";
 
+/*Criação de Modal para criação de pessoas transação por pessoa
+onde envia ao banco de dados para poder salvar uma nova transação */
+
 type TransactionModalProps = {
     open: boolean;
     onClose: () => void;

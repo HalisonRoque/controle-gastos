@@ -5,6 +5,7 @@ using webApi.Features.Categories.Repositories;
 
 namespace webApi.Features.Categories.Services
 {
+    /*Service de categorias*/
     public class CategoryService : ICategoryService
     {
         private readonly ICategoryRepository _repository;
@@ -14,6 +15,9 @@ namespace webApi.Features.Categories.Services
             _repository = repository;
         }
 
+        /*Função para listagem de todas as categorias cadastradas.
+        Podendo receber um filtro para finalidade
+        */
         public async Task<List<ResponseCategoryDto>> GetAllCategoryAsync(string? purpose)
         {
             var categories = await _repository.GetAllCategoryAsync();
@@ -33,6 +37,9 @@ namespace webApi.Features.Categories.Services
                 .ToList();
         }
 
+        /*Função para criação de categoria recebendo dados em um payload de CreateCategoryDto
+        onde faz a tipagem de dados atrávez do DTO ResponseCategoryDto
+        */
         public async Task<ResponseCategoryDto> CreateCategoryAsync(CreateCategoryDto dto)
         {
             var category = new Category
@@ -51,6 +58,7 @@ namespace webApi.Features.Categories.Services
             };
         }
 
+        /*Função para busca da categoria por seu id, onde retorna apenas o registro do id informado*/
         public async Task<ResponseCategoryDto> GetCategoryByIdAsync(int id)
         {
             var category = await _repository.GetCategoryByIdAsync(id);

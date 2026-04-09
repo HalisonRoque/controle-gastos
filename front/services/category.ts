@@ -1,6 +1,8 @@
 import api from "./api";
 import type { CategoryType } from "../src/types/CategoryType";
 
+/*Métodos criados para acessar os endpois dos controllers importando api do axios*/
+
 // Listar todos
 export const getCategory = async (purpose?: string): Promise<CategoryType[]> => {
     const { data } = await api.get("/api/category/all", {

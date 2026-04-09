@@ -16,6 +16,13 @@ import SearchIcon from '@mui/icons-material/Search';
 import type { TransactionType } from "../../../types/TransactionType";
 import { getTransaction } from "../../../../services/transaction";
 
+/*Componente para Listar transferência
+recebe os dados da API e lista por meio de funções mostrando os usuários.
+aLém de botão de filtragem por pessoa.
+Recebe o styles padrão criação para uso do CSS na telas do componente. 
+Aplica paginação de 5 linhas para pular a próxima listagem
+*/
+
 export default function TransactionList() {
     const [data, setData] = useState<TransactionType[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false);

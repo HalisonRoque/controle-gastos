@@ -4,6 +4,7 @@ using TransactionEntity = webApi.Features.Transactions.Entities.Transaction;
 
 namespace webApi.Features.Transactions.Repositories
 {
+    /*Criação de Repositories para acessar o banco de dados buscando e crinado registros*/
     public class TransactionRepository : ITransactionRepository
     {
         private readonly AppDbContext _context;

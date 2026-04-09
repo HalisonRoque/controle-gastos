@@ -2,6 +2,7 @@ using webApi.Features.Persons.DTOs;
 
 namespace webApi.Features.Persons.Services
 {
+    /*Declaração de inteface para as funções usadas no service, onde recebe os mesmo dados*/
     public interface IPersonService
     {
         Task<List<ResponsePersonDto>> GetAllAsync(string? name);

@@ -1,3 +1,4 @@
+/*DTO destinado para retorno de contas por categoria*/
 namespace webApi.Features.Transactions.DTOs
 {
     public class CategoryBalanceResponseDto

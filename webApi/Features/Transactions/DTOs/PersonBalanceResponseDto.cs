@@ -1,3 +1,4 @@
+/*DTO destinado para retorno de transações por pessoa*/
 namespace webApi.Features.Transactions.DTOs
 {
     public class PersonBalanceResponseDto

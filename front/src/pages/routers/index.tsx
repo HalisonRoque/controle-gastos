@@ -6,6 +6,8 @@ import { transactionRoutes } from "../transaction";
 import { balanceRoutes } from "../balance";
 import { categoryBalanceRoutes } from "../balanceCategory";
 
+/*Criando AppRoutes para acessar os componentes das telas do sistema*/
+
 const AppRoutes = () => {
     return useRoutes([
         ...homeRoutes,

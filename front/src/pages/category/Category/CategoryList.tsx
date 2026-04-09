@@ -20,6 +20,12 @@ import { useSnackbar } from "notistack";
 import { createCategory, getCategory } from "../../../../services/category";
 import CreateCategoryModal from "./CreateCategoryModal";
 
+/*Componente para Listar categorias e criiar novas categorias
+recebe os dados da API e lista por meio de funções mostrando as categorias.
+È chamado modal para criação de categoria.
+Recebe o styles padrão criação para uso do CSS na telas do componente. aplica paginação de 5 linhas para pular a próxima listagem
+*/
+
 export default function CategoryList() {
     const [data, setData] = useState<CategoryType[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false);

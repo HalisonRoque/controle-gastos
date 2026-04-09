@@ -1,11 +1,11 @@
 import React from "react";
 import List from "@mui/material/List";
-
 import routesConfig from "../../../pages/routers/routesConfig";
 import NavVerticalGroup from "./VerticalNavGroup";
 import VerticalItem from "./VerticalItem";
 import type { RouterConfigData } from "../../../pages/routers/routesConfig";
 
+/*Componente Menu lateral e navegação de telas*/
 const VerticalNav = () => {
     return (
         <List

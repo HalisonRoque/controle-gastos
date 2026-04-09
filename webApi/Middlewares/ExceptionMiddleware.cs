@@ -1,6 +1,7 @@
 using System.Text.Json;
 using webApi.Exceptions;
 
+/*Middleware para captura e envio de exceptions no sistema, deixando mais amigavel mensagens de erro*/
 namespace webApi.Middlewares
 {
     public class ExceptionMiddleware

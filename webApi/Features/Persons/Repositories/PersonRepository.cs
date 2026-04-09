@@ -6,6 +6,7 @@ namespace webApi.Features.Persons.Repositories
 {
     public class PersonRepository : IPersonRepository
     {
+        /*Criação de Repositories para acessar o banco de dados buscando e crinado registros*/
         private readonly AppDbContext _context;
 
         public PersonRepository(AppDbContext context)

@@ -9,6 +9,7 @@ using TransactionEntity = webApi.Features.Transactions.Entities.Transaction;
 
 namespace webApi.Features.Transactions.Services
 {
+    /*Service de transações*/
     public class TransactionService : ITransactionService
     {
         private readonly ITransactionRepository _repository;
@@ -26,6 +27,9 @@ namespace webApi.Features.Transactions.Services
             _categoryRepository = categoryRepository;
         }
 
+        /*Função para listagem de todas as categorias transações.
+        Podendo receber um filtro para finalidade
+        */
         public async Task<List<ResponseTransactionDto>> GetAllAsync(string? person)
         {
             var transactions = await _repository.GetAllAsync();
@@ -51,6 +55,9 @@ namespace webApi.Features.Transactions.Services
                 .ToList();
         }
 
+        /*Função para criação de Transações recebendo dados em um payload de CreateTransactionDto
+        onde faz a tipagem de dados atrávez do DTO ResponseTransactionDto
+        */
         public async Task<ResponseTransactionDto> CreateAsync(CreateTransactionDto dto)
         {
             var person = await _personRepository.GetByIdAsync(dto.PersonId);
@@ -95,6 +102,10 @@ namespace webApi.Features.Transactions.Services
             };
         }
 
+        /*Função para criação de listgem de todas as transações por pessoas
+        agrupando e somando as receitas e despesas por pessoas
+        onde faz a tipagem de dados de saída atrávez do DTO PersonBalanceResponseDto
+        */
         public async Task<PersonBalanceResponseDto> GetBalanceAsync()
         {
             var persons = await _personRepository.GetAllAsync();
@@ -136,6 +147,9 @@ namespace webApi.Features.Transactions.Services
             };
         }
 
+        /*Função para criação de listgem da soma de todas as receitas e despesas por categoria
+        onde faz a tipagem de dados de saída atrávez do DTO CategoryBalanceResponseDto
+        */
         public async Task<CategoryBalanceResponseDto> GetCategoryBalanceAsync()
         {
             var categories = await _categoryRepository.GetAllCategoryAsync();

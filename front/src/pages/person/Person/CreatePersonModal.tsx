@@ -10,6 +10,9 @@ import { useState } from "react";
 import type { CreatePersonDTO } from "../../../types/PersonType";
 import styles from "./styles.module.css";
 
+/*Criação de Modal para criação de pessoas 
+onde envia ao banco de dados para poder salvar uma nova pessoa */
+
 type PersonModalProps = {
     open: boolean;
     onClose: () => void;

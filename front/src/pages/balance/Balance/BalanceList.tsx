@@ -13,6 +13,11 @@ import {
 import { getPersonBalance } from "../../../../services/transaction";
 import type { PersonBalanceType } from "../../../types/TransactionType";
 
+/*Componente para Listar gastos por pessoa
+recebe os dados da API e lista por meio de funções mostrando o total de Receitas e Despesas por pessoa.
+Recebe o styles padrão criação para uso do CSS na telas do componente. aplica paginação de 5 linhas para pular a próxima listagem
+*/
+
 export default function PersonBalanceList() {
     const [data, setData] = useState<PersonBalanceType[]>([]);
     const [dataLoaded, setDataLoaded] = useState(false);
