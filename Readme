@@ -121,7 +121,7 @@ components/ – Componentes reutilizáveis da aplicação, como AppCard, tabelas
 pages/ – Páginas principais, conectadas às rotas do AppRoutes.
 services/ – Funções para consumo da API back-end.
 types/ – Tipagens TypeScript utilizadas para consistência entre front-end e back-end.
-styles/ – Arquivos de estilo local utilizando CSS Modules.
+styles/ – Arquivos de estilo global utilizando no projeto principal.
 
 ---
 
